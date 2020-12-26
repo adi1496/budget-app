@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your money in a smart way">
+    <meta name="theme-color" content="#0d66a1"/>
+    
+    <title>Budget App</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/index.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1 class="heading-1">Budget</h1>
+            <!-- <svg class="logo-icon">
+                <use xlink:href="img/svg/icons.svg#icon-wallet"></use>
+            </svg> -->
+            <h1 class="heading-1">APP</h1>
+        </div>
+
+        <h2 class="heading-2">Your Budget December 2020</h2>
+        <div class="balance">Your Balance: <span class="balance-value">600.00 €</span></div>
+
+        <div class="box-bar">
+            <div class="box-bar-text">Income:</div>
+            <div class="box-bar-sign">+</div>
+            <div class="box-bar-value">1200.00 €</div>
+        </div>
+        <div class="box-bar box-bar-red">
+            <div class="box-bar-text">Expenses:</div>
+            <div class="box-bar-sign">-</div>
+            <div class="box-bar-value">80000.00 €</div>
+            <div class="box-bar-percent">100%</div>
+        </div>
+    </header>
+
+    <section class="section-add">
+        <form class="form-add">
+            <select name="action-type" id="action-type" class="select-action">
+                <option value="+" selected>+</option>
+                <option value="-">-</option>
+            </select>
+            <select name="action-name" id="action-name">
+                <option value="salary">Salary</option>
+                <option value="rent">Rent</option>
+                <option value="project">Project</option>
+                <option value="food">Food</option>
+                <option value="gifts">Gifts</option>
+            </select>
+            
+            <input class="input-description" type="text" name="input-description" id="input-description" placeholder="Add a description">
+    
+            <input class="input-value" type="number" name="input-value" id="input-value" placeholder="Value">
+    
+            <button class="submit-btn" type="submit" id="add-btn">✓ Submit</button>
+        </form>
+
+    </section>
+
+
+
+    <section class="section-list">
+        <ul class="list incomes-list">
+            <h3 class="heading-3 heading-3-blue">Incomes</h3>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-blue">1200€</div>
+            </li>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-blue">1200€</div>
+            </li>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-blue">1200€</div>
+            </li>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-blue">1200€</div>
+            </li>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-blue">1200€</div>
+            </li>
+        </ul>
+
+        <ul class="list expenses-list">
+            <h3 class="heading-3 heading-3-red">Expenses</h3>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-red">1200€</div>
+            </li>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-red">1200€</div>
+            </li>
+            <li class="item">
+                <div class="item-name">Salary</div>
+                <div class="item-description">dsadsafsafasfasfas gdsgkdsng gsd ngsdkg nsdk </div>
+                <div class="item-value item-value-red">1200€</div>
+            </li>
+        </ul>
+    </section>
+
+
+    <script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./serviceWorker.js');
+        }
+    </script>
+
+</body>
+</html>
