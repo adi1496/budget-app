@@ -9,6 +9,12 @@ class State {
         this.curency = data.curency;
     }
 
+    calcPercentage() {
+        let result = (this.monthExpensesValue * 100) / this.monthIncomesValue;
+        result = result.toFixed(2);
+        this.monthExpensesPercentage = parseFloat(result);
+    }
+
     updateIncomes(newIncome) {
         this.incomes.push(newIncome);
 
@@ -24,7 +30,7 @@ class State {
         let sum = 0;
         this.expenses.forEach(expense => sum += expense.value);
         this.monthExpensesValue = sum;
-        this.monthExpensesPercentage = (this.monthExpensesValue * 100) / this.monthIncomesValue;
+        calcPercentage();
         this.updateBalance();
     }
 
@@ -57,7 +63,7 @@ class State {
         });
 
         this.expenses = newExpenses;
-        this.monthExpensesPercentage = (this.monthExpensesValue * 100) / this.monthIncomesValue;
+        calcPercentage()
         this.updateBalance();
     }
 }

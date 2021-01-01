@@ -43,6 +43,7 @@ const createNewEntry = (input) => {
         state.updateIncomes(input);
     }else if(input.type === '-') {
         input.percent = (input.value * 100) / state.monthIncomesValue;
+        input.percent = input.percent.toFixed(2);
         state.updateExpeses(input);
     }
 
