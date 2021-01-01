@@ -162,7 +162,6 @@ body {
 
 .box-bar-value {
     justify-self: end;
-
 }
 
 .box-bar-percent {
@@ -238,6 +237,10 @@ input::placeholder {
     padding: .5rem;
 }
 
+.submit-btn:active {
+    transform: scale(.9);
+}
+
 
 
 
@@ -264,14 +267,25 @@ input::placeholder {
     grid-template-columns: 1fr max-content max-content;
     grid-template-rows: 1fr 1fr;
     padding: 1rem 2rem;
+    gap: 0 2rem;
+    overflow-x: hidden;
+    border-radius: 5px;
 }
 
 .item:hover {
     background-color: #a7a7a7;
 }
 
+.item:hover .item-options {
+    visibility: visible;
+    display: flex;
+    opacity: 1;
+    width: 100%;
+    transform: translateX(0);
+}
+
 .item-name {
-    grid-column: 1 / 1;
+    grid-column: 1 / 2;
     grid-row: 1 / 1;
     font-size: 2rem;
     font-weight: 600;
@@ -279,7 +293,7 @@ input::placeholder {
 
 .item-description {
     grid-row: 2 / 3;
-    grid-column: 1 / 1;
+    grid-column: 1 / 2;
     font-size: 1.6rem;
     color: #8f8c8c;
 }
@@ -291,6 +305,13 @@ input::placeholder {
     font-size: 2rem;
 }
 
+.item-percent {
+    font-size: 1.4rem;
+    color: #ee2727b4;
+    /* background-color: #ee2727b4; */
+    padding: .3rem;
+}
+
 .item-value-blue {
     color: var(--primary-color-blue);
 }
@@ -299,7 +320,59 @@ input::placeholder {
     color: var(--primary-color-red);
 }
 
+.item-options {
+    grid-column: 3 / 4;
+    grid-row: 1 / -1;
+    display: flex;
+    /* display: none; */
+    visibility: hidden;
+    opacity: 0;
+    width: 0;
+    transform: translateX(10rem);
+    transition: all .5s, width 0s;
+}
 
+.item-edit,
+.item-delete {
+    padding: 0 .5rem;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.item-edit {
+
+}
+
+.item-delete {
+
+}
+
+.item-icon {
+    width: 3rem;
+    height: 3rem;
+    fill: var(--color-white);
+}
+
+.item-icon-edit:hover {
+    fill: var(--primary-color-blue);
+}
+
+.item-icon-delete:hover {
+    fill: var(--primary-color-red);
+}
+
+
+
+
+
+/******************
+    MEDIA SCREEN
+*******************/
 @media only screen and (max-width: 900px) {
     .section-list {
         grid-template-columns: 1fr;
