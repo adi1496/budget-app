@@ -13,7 +13,7 @@ const addEventListenersToNewListItems = () => {
         el.addEventListener('click', e => {
             e.preventDefault();
             const element = e.currentTarget.parentElement.parentElement;
-            console.log(element);
+
             Views.removeDomItem(element);
             Model.deleteItemFromState(element.dataset.type, element.dataset.id);
 

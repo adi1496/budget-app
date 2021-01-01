@@ -58,7 +58,6 @@ const createNewEntry = (input) => {
 
 const deleteItemFromState = (type, id) => {
     id = parseInt(id);
-    console.log(type, id);
     if(type === '+'){
         state.deleteIncome(id);
     }else if(type === '-') {
@@ -67,7 +66,7 @@ const deleteItemFromState = (type, id) => {
 
     Views.updateState(state);
     updateLocalStorage(state);
-    console.log(state);
+    // console.log(state);
 }
 
 

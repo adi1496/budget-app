@@ -11,7 +11,7 @@ class State {
 
     updateIncomes(newIncome) {
         this.incomes.push(newIncome);
-        // this.monthIncomesValue += newIncome.value;
+
         let sum = 0;
         this.incomes.forEach(income => sum += income.value);
         this.monthIncomesValue = sum;
@@ -20,7 +20,7 @@ class State {
 
     updateExpeses(newExpense) {
         this.expenses.push(newExpense);
-        // this.monthExpensesValue += newExpense.value;
+
         let sum = 0;
         this.expenses.forEach(expense => sum += expense.value);
         this.monthExpensesValue = sum;
