@@ -54,7 +54,7 @@ const addNewItemToDOM = (input) => {
         dom.incomesList.insertAdjacentHTML('beforeend', element);
     }else if(input.type === '-') {
         element = element.replace('{%class-color%}', 'item-value-red');
-        const percent = percentPlaceholder.replace('{%percent%}', `${input.percent}%`);
+        const percent = percentPlaceholder.replace('{%percent%}', `${parseInt(input.percent)}%`);
         element = element.replace('{%percent-placeholder%}', ` ${percent}`);
         dom.expensesList.insertAdjacentHTML('beforeend', element);
     }
