@@ -30,7 +30,7 @@ class State {
         let sum = 0;
         this.expenses.forEach(expense => sum += expense.value);
         this.monthExpensesValue = sum;
-        calcPercentage();
+        this.calcPercentage();
         this.updateBalance();
     }
 
@@ -63,7 +63,7 @@ class State {
         });
 
         this.expenses = newExpenses;
-        calcPercentage()
+        this.calcPercentage()
         this.updateBalance();
     }
 }
