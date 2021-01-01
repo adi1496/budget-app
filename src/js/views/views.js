@@ -1,16 +1,31 @@
-import dom from './../utils/dom.js';
+import dom, {refreshDOM} from './../utils/dom.js';
+import Functions from './../utils/functions.js';
 
-const itemPlaceholder = `<li data-id="{%id%}" class="item">
+const initView = (state) => {
+    dom.curency.forEach(el => el.textContent = state.curency);
+    dom.headingMonth.textContent = Functions.getMonthYear();
+    dom.headingMonth.dataset.id = Functions.getMonthYearLocalStorage();
+    dom.balance.textContent = state.balance;
+    dom.monthIncome.textContent = state.monthIncomesValue;
+    dom.monthExpense.textContent = state.monthExpensesValue;
+    dom.monthExpensePercent.textContent = `${state.monthExpensesPercentage}%`;
+    state.incomes.forEach(income => addNewItemToDOM(income));
+    state.expenses.forEach(expense => addNewItemToDOM(expense));
+}
+
+
+
+const itemPlaceholder = `<li data-id="{%id%}" data-type="{%type%}" class="item">
     <div class="item-name">{%name%}</div>
     <div class="item-description">{%description%}</div>
     <div class="item-value {%class-color%}">{%value%}{%percent-placeholder%}</div>
     <div class="item-options">
-    <div class="item-edit">
+    <div class="item-edit" id="item-edit">
         <svg class="item-icon item-icon-edit">
             <use xlink:href="img/svg/icons.svg#icon-pencil"></use>
         </svg>
     </div>
-    <div class="item-delete">
+    <div class="item-delete" id="item-delete">
         <svg class="item-icon item-icon-delete">
             <use xlink:href="img/svg/icons.svg#icon-cancel-circle"></use>
         </svg>
@@ -27,9 +42,9 @@ const firstLetterUppercase = (text) => {
 }
 
 const addNewItemToDOM = (input) => {
-    console.log(input);
     let element = itemPlaceholder.replace('{%name%}', firstLetterUppercase(input.name));
     element = element.replace('{%id%}', input.id);
+    element = element.replace('{%type%}', input.type);
     element = element.replace('{%description%}', input.description);
     element = element.replace('{%value%}', `${input.value}${input.curency}`);
 
@@ -44,7 +59,19 @@ const addNewItemToDOM = (input) => {
         dom.expensesList.insertAdjacentHTML('beforeend', element);
     }
 
+    refreshDOM();
 }
+
+
+
+
+const removeDomItem = (element) => {
+    element.remove();
+}
+
+
+
+
 
 const updateState = (state) => {
     dom.balance.textContent = state.balance;
@@ -88,7 +115,9 @@ const clearInputs = () => {
 }
 
 const Views = {
+    initView: initView,
     addNewItemToDOM: addNewItemToDOM,
+    removeDomItem: removeDomItem,
     updateState: updateState,
     valueFieldOnlyDecimalNumbers: valueFieldOnlyDecimalNumbers,
     changeInputBorders: changeInputBorders,

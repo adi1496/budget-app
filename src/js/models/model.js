@@ -1,9 +1,40 @@
 import Views from './../views/views.js';
 import State from './../utils/state.js';
+import Functions from './../utils/functions.js';
 
-//state
-const state = new State();
 
+// Update localStorage
+const updateLocalStorage = (newState) => {
+    window.localStorage.setItem(document.getElementById('heading-month').dataset.id, JSON.stringify(newState));
+}
+
+//Init State
+let state;
+const initState = () => {
+    const data = Functions.getMonthYearLocalStorage();
+    let localStorageData;
+    if(window.localStorage.getItem(data)){
+        localStorageData = JSON.parse(window.localStorage.getItem(data));
+    }else {
+        localStorageData = {
+            balance: 0,
+            monthIncomesValue: 0,
+            monthExpensesValue: 0,
+            monthExpensesPercentage: 0,
+            incomes: [],
+            expenses: [],
+            curency: '€',
+        }
+    }
+    state = new State(localStorageData);
+
+    return state;
+}
+
+
+
+
+// Create New Income / Expense
 const createNewEntry = (input) => {
     input.value = parseFloat(input.value);
     input.id = Date.now();
@@ -20,13 +51,31 @@ const createNewEntry = (input) => {
     Views.updateState(state);
     Views.clearInputs();
 
-
+    updateLocalStorage(state);
     console.log(state);
 }
 
 
+const deleteItemFromState = (type, id) => {
+    id = parseInt(id);
+    console.log(type, id);
+    if(type === '+'){
+        state.deleteIncome(id);
+    }else if(type === '-') {
+        state.deleteExpense(id);
+    }
+
+    Views.updateState(state);
+    updateLocalStorage(state);
+    console.log(state);
+}
+
+
+// Create an Object with all functions
 const Model = {
-    createNewEntry: createNewEntry
+    initState: initState,
+    createNewEntry: createNewEntry,
+    deleteItemFromState: deleteItemFromState
 }
 
 export default Model;

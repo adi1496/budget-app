@@ -17,8 +17,16 @@ const dom = {
     inputValue: getId('input-value'),
     incomesList: getId('incomes-list'),
     expensesList: getId('expenses-list'),
+    editListItem: document.querySelectorAll('#item-edit'),
+    deleteListItem: document.querySelectorAll('#item-delete'),
 
     root: document.documentElement
+}
+
+
+export const refreshDOM = () => {
+    dom.editListItem = document.querySelectorAll('#item-edit');
+    dom.deleteListItem = document.querySelectorAll('#item-delete');
 }
 
 export default dom;

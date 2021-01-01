@@ -1,29 +1,64 @@
 class State {
-    constructor() {
-        this.balance = 0;
-        this.monthIncomesValue = 0;
-        this.monthExpensesValue = 0;
-        this.monthExpensesPercentage = 0;
-        this.incomes = [];
-        this.expenses = [];
-        this.curency = '€';
+    constructor(data) {
+        this.balance = data.balance;
+        this.monthIncomesValue = data.monthIncomesValue;
+        this.monthExpensesValue = data.monthExpensesValue;
+        this.monthExpensesPercentage = data.monthExpensesPercentage;
+        this.incomes = data.incomes;
+        this.expenses = data.expenses;
+        this.curency = data.curency;
     }
 
     updateIncomes(newIncome) {
-        this.monthIncomesValue += newIncome.value;
         this.incomes.push(newIncome);
+        // this.monthIncomesValue += newIncome.value;
+        let sum = 0;
+        this.incomes.forEach(income => sum += income.value);
+        this.monthIncomesValue = sum;
         this.updateBalance();
     }
 
     updateExpeses(newExpense) {
-        this.monthExpensesValue += newExpense.value;
-        this.monthExpensesPercentage = (this.monthExpensesValue * 100) / this.monthIncomesValue;
         this.expenses.push(newExpense);
+        // this.monthExpensesValue += newExpense.value;
+        let sum = 0;
+        this.expenses.forEach(expense => sum += expense.value);
+        this.monthExpensesValue = sum;
+        this.monthExpensesPercentage = (this.monthExpensesValue * 100) / this.monthIncomesValue;
         this.updateBalance();
     }
 
     updateBalance() {
         this.balance = this.monthIncomesValue - this.monthExpensesValue;
+    }
+
+    deleteIncome(dataId) {
+        const newIncomes = [];
+        this.incomes.forEach(income => {
+            if(income.id !== dataId) {
+                newIncomes.push(income);
+            }else {
+                this.monthIncomesValue -= income.value;
+            }
+        });
+
+        this.incomes = newIncomes;
+        this.updateBalance();
+    }
+
+    deleteExpense(dataId) {
+        const newExpenses = [];
+        this.expenses.forEach(expense => {
+            if(expense.id !== dataId) {
+                newExpenses.push(expense);
+            }else {
+                this.monthExpensesValue -= expense.value;
+            }
+        });
+
+        this.expenses = newExpenses;
+        this.monthExpensesPercentage = (this.monthExpensesValue * 100) / this.monthIncomesValue;
+        this.updateBalance();
     }
 }
 
