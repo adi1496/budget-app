@@ -401,10 +401,6 @@ input::placeholder {
         grid-template-columns: 40% max-content max-content 1fr;
     }
 
-    .item:hover .item-options {
-        
-    }
-
     input, select {
         margin-bottom: 1rem;
     }
