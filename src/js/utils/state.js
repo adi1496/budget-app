@@ -17,25 +17,33 @@ class State {
 
     updateIncomes(newIncome) {
         this.incomes.push(newIncome);
-
-        let sum = 0;
-        this.incomes.forEach(income => sum += income.value);
-        this.monthIncomesValue = sum;
+        this.updateIncExpValue('inc');
+        
         this.updateBalance();
     }
 
     updateExpeses(newExpense) {
         this.expenses.push(newExpense);
+        this.updateIncExpValue('exp');
 
-        let sum = 0;
-        this.expenses.forEach(expense => sum += expense.value);
-        this.monthExpensesValue = sum;
         this.calcPercentage();
         this.updateBalance();
     }
 
     updateBalance() {
-        this.balance = this.monthIncomesValue - this.monthExpensesValue;
+        const val = this.monthIncomesValue - this.monthExpensesValue;
+        this.balance = parseFloat(val.toFixed(2));
+    }
+
+    updateIncExpValue(type) {
+        let sum = 0;
+        if(type === 'inc') {
+            this.incomes.forEach(income => sum += income.value);
+            this.monthIncomesValue = parseFloat(sum.toFixed(2));
+        }else if(type === 'exp') {
+            this.expenses.forEach(expense => sum += expense.value);
+            this.monthExpensesValue = parseFloat(sum.toFixed(2));
+        }
     }
 
     deleteIncome(dataId) {
@@ -43,12 +51,11 @@ class State {
         this.incomes.forEach(income => {
             if(income.id !== dataId) {
                 newIncomes.push(income);
-            }else {
-                this.monthIncomesValue -= income.value;
             }
         });
-
         this.incomes = newIncomes;
+
+        this.updateIncExpValue('inc');
         this.updateBalance();
     }
 
@@ -57,12 +64,11 @@ class State {
         this.expenses.forEach(expense => {
             if(expense.id !== dataId) {
                 newExpenses.push(expense);
-            }else {
-                this.monthExpensesValue -= expense.value;
             }
         });
 
         this.expenses = newExpenses;
+        this.updateIncExpValue('exp');
         this.calcPercentage()
         this.updateBalance();
     }

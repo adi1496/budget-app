@@ -9,6 +9,8 @@ const initApp = () => {
 }
 
 const addEventListenersToNewListItems = () => {
+    dom.listsItems.forEach(item => item.addEventListener('mouseover', Views.addItemHoverClass));
+
     dom.deleteListItem.forEach(el => {
         el.addEventListener('click', e => {
             e.preventDefault();
@@ -22,13 +24,17 @@ const addEventListenersToNewListItems = () => {
 }
 
 const controller = () => {
+    // let user introduce only decimal numbers in the value field
     Views.valueFieldOnlyDecimalNumbers(dom.inputValue);
 
+    // listener when user choose the type of entry (+ or -)
     dom.inputType.addEventListener('change', e => {
         e.preventDefault();
+        //change the borders of inputs
         Views.changeInputBorders(e.target.value);
     });
 
+    // Form submited
     dom.addItemForm.addEventListener('submit', e => {
         e.preventDefault();
         const input = {
@@ -37,9 +43,21 @@ const controller = () => {
             description: dom.inputDescription.value,
             value: dom.inputValue.value
         }
+
+        // create new income / expense
         Model.createNewEntry(input);
+
+        // add event listener for the new elements inserted
         addEventListenersToNewListItems();
     });
+
+
+
+
+
+
+    /** Only visual looking page */
+
 
 
 }
