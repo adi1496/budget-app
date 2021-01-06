@@ -114,10 +114,6 @@ const clearInputs = () => {
     dom.inputValue.value = '';
 }
 
-const addItemHoverClass = (e) => {
-    console.log(e.currentTarget);
-}
-
 const Views = {
     initView: initView,
     addNewItemToDOM: addNewItemToDOM,
@@ -125,8 +121,7 @@ const Views = {
     updateState: updateState,
     valueFieldOnlyDecimalNumbers: valueFieldOnlyDecimalNumbers,
     changeInputBorders: changeInputBorders,
-    clearInputs: clearInputs,
-    addItemHoverClass: addItemHoverClass
+    clearInputs: clearInputs
 }
 
 export default Views;
