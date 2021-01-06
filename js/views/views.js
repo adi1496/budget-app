@@ -114,6 +114,13 @@ const clearInputs = () => {
     dom.inputValue.value = '';
 }
 
+const addItemHoverClass = (e) => {
+    dom.listsItems.forEach(item => {
+        if(item !== e.currentTarget) item.classList.remove('item-hover');
+    });
+    e.currentTarget.classList.toggle('item-hover');
+}
+
 const Views = {
     initView: initView,
     addNewItemToDOM: addNewItemToDOM,
@@ -121,7 +128,8 @@ const Views = {
     updateState: updateState,
     valueFieldOnlyDecimalNumbers: valueFieldOnlyDecimalNumbers,
     changeInputBorders: changeInputBorders,
-    clearInputs: clearInputs
+    clearInputs: clearInputs,
+    addItemHoverClass: addItemHoverClass
 }
 
 export default Views;

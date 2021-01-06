@@ -9,6 +9,8 @@ const initApp = () => {
 }
 
 const addEventListenersToNewListItems = () => {
+    dom.listsItems.forEach(item => item.addEventListener('click', Views.addItemHoverClass));
+
     dom.deleteListItem.forEach(el => {
         el.addEventListener('click', e => {
             e.preventDefault();

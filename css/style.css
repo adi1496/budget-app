@@ -264,14 +264,19 @@ input::placeholder {
     gap: 0 2rem;
     overflow-x: hidden;
     border-radius: 5px;
-}
-
-/* .item:hover, .item:active {
     background-color: #a7a7a7;
+    cursor: context-menu;
 }
 
-.item:hover .item-options,
-.item:active .item-options {
+.item:not(:last-of-type) {
+    margin-bottom: .5rem;
+}
+
+.item:hover {
+    background-color: #858383;
+}
+
+.item-hover .item-options{
     visibility: visible;
     display: flex;
     opacity: 1;
@@ -279,10 +284,9 @@ input::placeholder {
     transform: translateX(0);
 }
 
-.item:hover .item-options *,
-.item:active .item-options * {
+.item-hover .item-options * {
     visibility: visible;
-} */
+}
 
 .item-name {
     grid-column: 1 / 2;
