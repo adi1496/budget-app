@@ -404,6 +404,10 @@ input::placeholder {
     .item:hover .item-options {
         
     }
+
+    input, select {
+        margin-bottom: 1rem;
+    }
 }
 
 @media only screen and (max-width: 380px) {
@@ -418,6 +422,12 @@ input::placeholder {
     .box-bar {
         width: 35rem;
         grid-template-columns: 30% max-content max-content 1fr;
+    }
+
+    .form-add {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
     }
 }
 
