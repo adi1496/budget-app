@@ -264,13 +264,15 @@ input::placeholder {
     gap: 0 2rem;
     overflow-x: hidden;
     border-radius: 5px;
-    background-color: #a7a7a7;
+    background-color: #dfdbdb;
     cursor: context-menu;
 }
 
 .item:not(:last-of-type) {
     margin-bottom: .5rem;
 }
+
+/* #a7a7a7 */
 
 .item:hover {
     background-color: #858383;
