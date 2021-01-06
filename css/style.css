@@ -154,6 +154,12 @@ body {
     margin-left: 1rem;
 }
 
+.box-bar-sign {
+    /* font-size: 4rem; */
+    /* margin-right: 1rem; */
+    /* margin-top: -.5rem; */
+}
+
 .box-bar-value {
     justify-self: end;
 }
@@ -181,9 +187,9 @@ body {
     padding: 2rem;
 }
 
-/* .form-add {
+.form-add {
 
-} */
+}
 
 select,
 input,
@@ -346,13 +352,13 @@ input::placeholder {
     cursor: pointer;
 }
 
-/* .item-edit {
+.item-edit {
 
 }
 
 .item-delete {
 
-} */
+}
 
 .item-icon {
     width: 3rem;
@@ -375,25 +381,6 @@ input::placeholder {
 /******************
     MEDIA SCREEN
 *******************/
-@media (hover: hover) and (pointer: fine) {
-    .item:hover {
-        background-color: #a7a7a7;
-    }
-    
-    .item:hover .item-options {
-        visibility: visible;
-        display: flex;
-        opacity: 1;
-        width: 100%;
-        transform: translateX(0);
-    }
-    
-    .item:hover .item-options * {
-        visibility: visible;
-    }
-}
-
-
 @media only screen and (max-width: 900px) {
     .section-list {
         grid-template-columns: 1fr;
@@ -414,8 +401,8 @@ input::placeholder {
         grid-template-columns: 40% max-content max-content 1fr;
     }
 
-    input, select {
-        margin-bottom: 1rem;
+    .item:hover .item-options {
+        
     }
 }
 
@@ -432,11 +419,22 @@ input::placeholder {
         width: 35rem;
         grid-template-columns: 30% max-content max-content 1fr;
     }
-
-    .form-add {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-    }
 }
 
+@media (hover: hover) and (pointer: fine) {
+    .item:hover {
+        background-color: #a7a7a7;
+    }
+    
+    .item:hover .item-options {
+        visibility: visible;
+        display: flex;
+        opacity: 1;
+        width: 100%;
+        transform: translateX(0);
+    }
+    
+    .item:hover .item-options * {
+        visibility: visible;
+    }
+}
