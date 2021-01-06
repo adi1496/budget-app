@@ -266,7 +266,7 @@ input::placeholder {
     border-radius: 5px;
 }
 
-.item:hover, .item:active {
+/* .item:hover, .item:active {
     background-color: #a7a7a7;
 }
 
@@ -282,7 +282,7 @@ input::placeholder {
 .item:hover .item-options *,
 .item:active .item-options * {
     visibility: visible;
-}
+} */
 
 .item-name {
     grid-column: 1 / 2;
@@ -377,7 +377,7 @@ input::placeholder {
 /******************
     MEDIA SCREEN
 *******************/
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: none) {
     .item:hover {
         background-color: #a7a7a7;
     }
