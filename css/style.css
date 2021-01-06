@@ -62,6 +62,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    user-select: none;
+    cursor: pointer;
 }
 
 .logo-icon {
@@ -264,7 +266,7 @@ input::placeholder {
     gap: 0 2rem;
     overflow-x: hidden;
     border-radius: 5px;
-    background-color: #dfdbdb;
+    background-color: #e9e6e6;
     cursor: context-menu;
 }
 
@@ -272,10 +274,12 @@ input::placeholder {
     margin-bottom: .5rem;
 }
 
-/* #a7a7a7 */
-
 .item:hover {
-    background-color: #858383;
+    background-color: #a7a7a7;
+}
+
+.item-hover {
+    background-color: #a7a7a7;
 }
 
 .item-hover .item-options{
@@ -381,26 +385,8 @@ input::placeholder {
 
 
 /******************
-    MEDIA SCREEN
+    MEDIA QYERY
 *******************/
-@media (hover: hover) and (pointer: none) {
-    .item:hover {
-        background-color: #a7a7a7;
-    }
-    
-    .item:hover .item-options {
-        visibility: visible;
-        display: flex;
-        opacity: 1;
-        width: 100%;
-        transform: translateX(0);
-    }
-    
-    .item:hover .item-options * {
-        visibility: visible;
-    }
-}
-
 
 @media only screen and (max-width: 900px) {
     .section-list {
