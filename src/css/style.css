@@ -62,6 +62,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    user-select: none;
+    cursor: pointer;
 }
 
 .logo-icon {
@@ -154,12 +156,6 @@ body {
     margin-left: 1rem;
 }
 
-.box-bar-sign {
-    /* font-size: 4rem; */
-    /* margin-right: 1rem; */
-    /* margin-top: -.5rem; */
-}
-
 .box-bar-value {
     justify-self: end;
 }
@@ -187,9 +183,9 @@ body {
     padding: 2rem;
 }
 
-.form-add {
+/* .form-add {
 
-}
+} */
 
 select,
 input,
@@ -270,13 +266,23 @@ input::placeholder {
     gap: 0 2rem;
     overflow-x: hidden;
     border-radius: 5px;
+    background-color: #e9e6e6;
+    cursor: context-menu;
+}
+
+.item:not(:last-of-type) {
+    margin-bottom: .5rem;
 }
 
 .item:hover {
     background-color: #a7a7a7;
 }
 
-.item:hover .item-options {
+.item-hover {
+    background-color: #a7a7a7;
+}
+
+.item-hover .item-options{
     visibility: visible;
     display: flex;
     opacity: 1;
@@ -284,7 +290,7 @@ input::placeholder {
     transform: translateX(0);
 }
 
-.item:hover .item-options * {
+.item-hover .item-options * {
     visibility: visible;
 }
 
@@ -352,13 +358,13 @@ input::placeholder {
     cursor: pointer;
 }
 
-.item-edit {
+/* .item-edit {
 
 }
 
 .item-delete {
 
-}
+} */
 
 .item-icon {
     width: 3rem;
@@ -379,8 +385,9 @@ input::placeholder {
 
 
 /******************
-    MEDIA SCREEN
+    MEDIA QYERY
 *******************/
+
 @media only screen and (max-width: 900px) {
     .section-list {
         grid-template-columns: 1fr;
@@ -399,10 +406,6 @@ input::placeholder {
     .box-bar {
         width: 40rem;
         grid-template-columns: 40% max-content max-content 1fr;
-    }
-
-    .item:hover .item-options {
-        
     }
 
     input, select {
@@ -431,20 +434,3 @@ input::placeholder {
     }
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .item:hover {
-        background-color: #a7a7a7;
-    }
-    
-    .item:hover .item-options {
-        visibility: visible;
-        display: flex;
-        opacity: 1;
-        width: 100%;
-        transform: translateX(0);
-    }
-    
-    .item:hover .item-options * {
-        visibility: visible;
-    }
-}
