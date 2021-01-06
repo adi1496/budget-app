@@ -15,7 +15,7 @@ const initView = (state) => {
 
 
 
-const itemPlaceholder = `<li data-id="{%id%}" data-type="{%type%}" class="item">
+const itemPlaceholder = `<li id="list-item" data-id="{%id%}" data-type="{%type%}" class="item">
     <div class="item-name">{%name%}</div>
     <div class="item-description">{%description%}</div>
     <div class="item-value {%class-color%}">{%value%}{%percent-placeholder%}</div>
@@ -114,6 +114,10 @@ const clearInputs = () => {
     dom.inputValue.value = '';
 }
 
+const addItemHoverClass = (e) => {
+    console.log(e.currentTarget);
+}
+
 const Views = {
     initView: initView,
     addNewItemToDOM: addNewItemToDOM,
@@ -121,7 +125,8 @@ const Views = {
     updateState: updateState,
     valueFieldOnlyDecimalNumbers: valueFieldOnlyDecimalNumbers,
     changeInputBorders: changeInputBorders,
-    clearInputs: clearInputs
+    clearInputs: clearInputs,
+    addItemHoverClass: addItemHoverClass
 }
 
 export default Views;

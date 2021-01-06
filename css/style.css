@@ -284,6 +284,10 @@ input::placeholder {
     transform: translateX(0);
 }
 
+.item:hover .item-options * {
+    visibility: visible;
+}
+
 .item-name {
     grid-column: 1 / 2;
     grid-row: 1 / 1;
@@ -330,6 +334,10 @@ input::placeholder {
     width: 0;
     transform: translateX(10rem);
     transition: all .5s, width 0s;
+}
+
+.item-options * {
+    visibility: hidden;
 }
 
 .item-edit,
@@ -392,6 +400,10 @@ input::placeholder {
         width: 40rem;
         grid-template-columns: 40% max-content max-content 1fr;
     }
+
+    .item:hover .item-options {
+        
+    }
 }
 
 @media only screen and (max-width: 380px) {
@@ -399,8 +411,30 @@ input::placeholder {
         text-align: center;
     }
 
+    .balance {
+        text-align: center;
+    }
+
     .box-bar {
         width: 35rem;
         grid-template-columns: 30% max-content max-content 1fr;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .item:hover {
+        background-color: #a7a7a7;
+    }
+    
+    .item:hover .item-options {
+        visibility: visible;
+        display: flex;
+        opacity: 1;
+        width: 100%;
+        transform: translateX(0);
+    }
+    
+    .item:hover .item-options * {
+        visibility: visible;
     }
 }
