@@ -84,12 +84,15 @@ const updateState = (state) => {
     dom.monthExpensePercent.textContent = `${parseInt(state.monthExpensesPercentage)}%`;
 }
 
-const valueFieldOnlyDecimalNumbers = (element) => {
+const allowOnlyNumbersAndMathSymbols = (element) => {
     element.addEventListener('input', async e => {
         e.preventDefault();
+        if(document.querySelector('.input-box-placeholder').style.visibility !== 'hidden'){
+            document.querySelector('.input-box-placeholder').style.visibility = 'hidden';
+        }
         const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '/', '*'];
 
-        const arr = e.target.value.split('');
+        const arr = e.target.textContent.split('');
         const value = arr[arr.length - 1];
 
         let isAllowed = false;
@@ -101,7 +104,7 @@ const valueFieldOnlyDecimalNumbers = (element) => {
         
         if(isAllowed === false) arr.pop();
         
-        e.target.value = arr.join('');
+        e.target.textContent = arr.join('');
     });
 }
 
@@ -124,7 +127,7 @@ const Views = {
     updateState: updateState,
     showAddNewItemPopup: showAddNewItemPopup,
     closeAddNewItemPopup: closeAddNewItemPopup,
-    valueFieldOnlyDecimalNumbers: valueFieldOnlyDecimalNumbers,
+    allowOnlyNumbersAndMathSymbols: allowOnlyNumbersAndMathSymbols,
     clearInputs: clearInputs,
     addItemHoverClass: addItemHoverClass
 }

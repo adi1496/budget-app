@@ -3,7 +3,7 @@ const addPopupPlaceholder = `<div class="dark-screen" id="dark-screen-popup">
     <h4 class="heading-4">Add New {%type%}</h4>
     <div class="input-box">
         <div class="input-box-placeholder">You can write also a mathematic expression here</div>
-        <div class="input-value-expression" contenteditable></div>
+        <div class="input-value-expression" id="input-value" contenteditable></div>
         <svg class="backspace">
             <use xlink:href="img/svg/icons.svg#icon-backspace"></use>
         </svg>
@@ -44,7 +44,7 @@ const addPopupPlaceholder = `<div class="dark-screen" id="dark-screen-popup">
 
     <div class="description-box">
         <div class="description-box-placeholder">Type a note</div>
-        <div class="input-description-div" contenteditable></div>
+        <div class="input-description-div" id="input-description" contenteditable></div>
     </div>
 
     <div class="buttons">

@@ -37,21 +37,21 @@ const controller = () => {
     // });
 
     // Form submited
-    dom.addItemForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const input = {
-            type: dom.inputType.value,
-            name: dom.inputName.value,
-            description: dom.inputDescription.value,
-            value: dom.inputValue.value
-        }
+    // dom.addItemForm.addEventListener('submit', e => {
+    //     e.preventDefault();
+    //     const input = {
+    //         type: dom.inputType.value,
+    //         name: dom.inputName.value,
+    //         description: dom.inputDescription.value,
+    //         value: dom.inputValue.value
+    //     }
 
-        // create new income / expense
-        Model.createNewEntry(input);
+    //     // create new income / expense
+    //     Model.createNewEntry(input);
 
-        // add event listener for the new elements inserted
-        addEventListenersToNewListItems();
-    });
+    //     // add event listener for the new elements inserted
+    //     addEventListenersToNewListItems();
+    // });
 
 
 
@@ -75,9 +75,18 @@ function activateAddNewItemPopup(event) {
     event.preventDefault();
     Views.showAddNewItemPopup(event);
 
+    Views.allowOnlyNumbersAndMathSymbols(document.getElementById('input-value'));
+    document.getElementById('input-description').addEventListener('input', e => {
+        if(document.querySelector('.description-box-placeholder').style.visibility !== 'hidden'){
+            document.querySelector('.description-box-placeholder').style.visibility = 'hidden';
+        }
+    });
+
     document.getElementById('cancel-popup-btn').addEventListener('click', e => {
         e.preventDefault();
         
         Views.closeAddNewItemPopup();
-    })
+    });
+
+
 }

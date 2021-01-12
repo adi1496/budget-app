@@ -171,6 +171,10 @@ body {
     justify-content: center;
 }
 
+.category-item-selected {
+    background-color: var(--color-inputs);
+}
+
 .category-item:hover {
     background-color: #e9e6e6;
 }
@@ -302,7 +306,7 @@ body {
 *******************/
 .header {
     grid-column: 1 / -1;
-    background-image: linear-gradient(rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9)), url(../img/background.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, 0.8)), url(../img/background.jpg);
     background-size: cover;
     /* display: grid;
     grid-template-columns: 1fr 1fr;
