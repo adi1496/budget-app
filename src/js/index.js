@@ -24,15 +24,17 @@ const addEventListenersToNewListItems = () => {
 }
 
 const controller = () => {
+    dom.incomeBtn.addEventListener('click', activateAddNewItemPopup);
+    dom.expenseBtn.addEventListener('click', activateAddNewItemPopup);
     // let user introduce only decimal numbers in the value field
-    Views.valueFieldOnlyDecimalNumbers(dom.inputValue);
+    // Views.valueFieldOnlyDecimalNumbers(dom.inputValue);
 
     // listener when user choose the type of entry (+ or -)
-    dom.inputType.addEventListener('change', e => {
-        e.preventDefault();
-        //change the borders of inputs
-        Views.changeInputBorders(e.target.value);
-    });
+    // dom.inputType.addEventListener('change', e => {
+    //     e.preventDefault();
+    //     //change the borders of inputs
+    //     Views.changeInputBorders(e.target.value);
+    // });
 
     // Form submited
     dom.addItemForm.addEventListener('submit', e => {
@@ -53,9 +55,6 @@ const controller = () => {
 
 
 
-
-
-
     /** Only visual looking page */
 
 
@@ -65,3 +64,20 @@ const controller = () => {
 initApp();
 controller();
 addEventListenersToNewListItems();
+
+
+
+
+/**************** LISTENERS CALLBACK FUNCTIONS **********************/ 
+
+// activate ADD NEW ITEM POPUP
+function activateAddNewItemPopup(event) {
+    event.preventDefault();
+    Views.showAddNewItemPopup(event);
+
+    document.getElementById('cancel-popup-btn').addEventListener('click', e => {
+        e.preventDefault();
+        
+        Views.closeAddNewItemPopup();
+    })
+}

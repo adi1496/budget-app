@@ -10,6 +10,8 @@ const dom = {
     monthIncome: getId('income-month'),
     monthExpense: getId('expense-month'),
     monthExpensePercent: getId('expense-month-percent'),
+    incomeBtn: getId('income-btn'),
+    expenseBtn: getId('expense-btn'),
     addItemForm: getId('form-add-item'),
     inputType: getId('input-type'),
     inputName: getId('input-name'),
