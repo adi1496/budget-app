@@ -26,7 +26,7 @@
 }
 
 html {
-    box-sizing: inherit;
+    box-sizing: border-box;
     font-size: 62.5%;
 }
 
@@ -39,39 +39,227 @@ body {
 
 
 
+
 /******************
-    HEADER
+    NAVIGATION + OTHER FIXED BUTTONS AND ELEMENTS
 *******************/
-
-
-.header {
+.nav {
     grid-column: 1 / -1;
-    background-image: linear-gradient(rgba(0, 0, 0, .9), rgba(0, 0, 0, 0.9)), url(../img/background.jpg);
-    background-size: cover;
-    /* display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
+    height: 6rem;
+    background-color: #097a09;
+    position: fixed;
 }
 
-.logo {
+
+.add-fixed-btn {
+    font-size: 5rem;
+    font-family: inherit;
+    position: fixed;
+    bottom: 2rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--color-white);
+}
+
+.add-fixed-btn:hover {
+    background-color: #c4c1c1;
+}
+
+.add-fixed-btn:active {
+    transform: scale(.9);
+}
+
+.income-btn {
+    left: 2rem;
+    border: 5px solid var(--primary-color-blue);
+    color: var(--primary-color-blue);
+}
+
+.expense-btn {
+    right: 2rem;
+    border: 5px solid var(--primary-color-red);
+    color: var(--primary-color-red);
+}
+
+.dark-screen {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.856);
+}
+
+.container-add-new {
+    width: 80%;
+    height: 80vh;
+    position: fixed;
+    background-color: #ffffff;
+    /* background-color: var(--primary-color-blue); */
     padding: 2rem;
-    align-self: flex-start;
+    border-radius: 10px;
+    z-index: 900;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    user-select: none;
+    justify-content: space-between;
+}
+
+.input-box {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    background-color: #dddada;
+    font-size: 3rem;
+    padding: 2rem;
+    width: 60%;
+    outline: none;
+    position: relative;
+}
+
+.input-box-placeholder {
+    /* content: "You can write also a mathematic expression here"; */
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translate(0, -50%);
+    color: #f0ebeb;
+    font-size: 2rem;
+}
+
+.input-value-expression {
+    outline: none;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    color: var(--color-inputs);
+}
+
+.backspace {
+    width: 4rem;
+    height: 4rem;
+    fill: var(--color-inputs);
+    margin-left: 3rem;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translate(0, -50%);
+}
+
+.categories-list {
+    margin-top: 3rem;
+    height: 15rem;
+    width: 60%;
+    overflow-y: scroll;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    /* background-color:  #ecebeb; */
+    /* margin-bottom: .5rem; */
+    border-bottom: 1px solid #e9e6e6;
+    justify-content: center;
+}
+
+.category-item-selected {
+    background-color: var(--color-inputs);
+}
+
+.category-item:hover {
+    background-color: #e9e6e6;
+}
+
+.radio-btn {
+    display: none;
+}
+
+.category-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 2rem;
+}
+
+.category-description {
+    font-size: 2rem;
+}
+
+
+.description-box {
+    margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    background-image: linear-gradient(to bottom, #ffffff 80%, #f0efef);
+    font-size: 2rem;
+    padding: 2rem;
+    width: 60%;
+    outline: none;
+    position: relative;
+}
+
+.description-box-placeholder {
+    /* content: "Type a note"; */
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translate(0, -50%);
+    color: #f0ebeb;
+    font-size: 2rem;
+}
+
+.input-description-div {
+    outline: none;
+    width: 100%;
+    position: relative;
+    color: var(--color-inputs);
+}
+
+/* .buttons {
+
+} */
+
+.new-btn {
+    padding: 2rem 4rem;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.7rem;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.logo-icon {
-    width: 5rem;
-    height: 5rem;
-    fill: var(--primary-color-blue);
+.new-btn:active {
+    transform: translateY(3px);
 }
 
+.cancel-btn {
+    margin-right: 1rem;
+}
+
+.add-btn {
+    background-color: var(--primary-color-blue);
+}
+
+.add-btn-red {
+    background-color: var(--primary-color-red);
+}
+
+
+
+
+
+/******************
+    HEADINGS
+*******************/
 .heading-1 {
     font-family: 'Permanent Marker', cursive;
     font-size: 6rem;
@@ -107,6 +295,49 @@ body {
     color: var(--primary-color-red);
     border-bottom: 2px solid var(--primary-color-red);
 }
+
+
+.heading-4 {
+    font-size: 4rem;
+    color: var(--color-inputs);
+    text-align: center;
+}
+
+
+
+/******************
+    HEADER
+*******************/
+.header {
+    grid-column: 1 / -1;
+    background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, 0.8)), url(../img/background.jpg);
+    background-size: cover;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 6rem; */
+}
+
+.logo {
+    padding: 2rem;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.logo-icon {
+    width: 5rem;
+    height: 5rem;
+    fill: var(--primary-color-blue);
+}
+
+
 
 .balance {
     color: var(--color-white);
@@ -388,6 +619,26 @@ input::placeholder {
     MEDIA QYERY
 *******************/
 
+@media only screen and (max-width: 1250px) {
+    .container-add-new {
+        width: 80%;
+        height: 100vh;
+    }
+
+    .input-box {
+        width: 80%;
+    }
+
+    .categories-list {
+        width: 80%;
+    }
+
+    .description-box {
+        width: 80%;
+    }
+    
+}
+
 @media only screen and (max-width: 900px) {
     .section-list {
         grid-template-columns: 1fr;
@@ -396,6 +647,24 @@ input::placeholder {
     .section-add {
         flex-direction: column;
     }
+
+    .container-add-new {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .input-box {
+        width: 100%;
+    }
+
+    .categories-list {
+        width: 100%;
+    }
+
+    .description-box {
+        width: 100%;
+    }
+
 }
 
 @media only screen and (max-width: 550px) {
@@ -411,6 +680,7 @@ input::placeholder {
     input, select {
         margin-bottom: 1rem;
     }
+
 }
 
 @media only screen and (max-width: 380px) {
