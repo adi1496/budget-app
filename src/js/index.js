@@ -1,4 +1,4 @@
-import dom, {refreshDOM} from './utils/dom.js';
+import dom, {refreshDOM, refreshAddNewItemPopupDOM} from './utils/dom.js';
 // import State from './utils/state.js';
 import Model from './models/model.js';
 import Views from './views/views.js';
@@ -74,17 +74,50 @@ addEventListenersToNewListItems();
 function activateAddNewItemPopup(event) {
     event.preventDefault();
     Views.showAddNewItemPopup(event);
+    refreshAddNewItemPopupDOM();
 
-    Views.allowOnlyNumbersAndMathSymbols(document.getElementById('input-value'));
-    document.getElementById('input-description').addEventListener('input', e => {
-        if(document.querySelector('.description-box-placeholder').style.visibility !== 'hidden'){
-            document.querySelector('.description-box-placeholder').style.visibility = 'hidden';
+    Views.allowOnlyNumbersAndMathSymbols(dom.addNewItemPopup.inputValue);
+    dom.addNewItemPopup.inputDescription.addEventListener('input', e => {
+        if(dom.addNewItemPopup.descriptionBoxPlaceholder.style.visibility !== 'hidden'){
+            dom.addNewItemPopup.descriptionBoxPlaceholder.style.visibility = 'hidden';
         }
     });
 
-    document.getElementById('cancel-popup-btn').addEventListener('click', e => {
+
+    dom.addNewItemPopup.radioBtns.forEach(radioBtn => {
+        radioBtn.addEventListener('change', Views.selectCategory);
+    })
+
+    dom.addNewItemPopup.cancelBtn.addEventListener('click', e => {
         e.preventDefault();
         
+        Views.closeAddNewItemPopup();
+    });
+
+    dom.addNewItemPopup.submitBtn.addEventListener('click', e => {
+        e.preventDefault();
+    });
+
+    dom.addNewItemPopup.submitBtn.addEventListener('click', e => {
+        const input = {
+            type: e.currentTarget.dataset.type,
+            description: dom.addNewItemPopup.inputDescription.textContent,
+            value: dom.addNewItemPopup.inputValue.textContent,
+        };
+
+        dom.addNewItemPopup.radioBtns.forEach(radio => {
+            if(radio.checked) input.name = radio.id;
+        });
+
+        console.log(input);
+
+        // create new income / expense
+        Model.createNewEntry(input);
+
+        // add event listener for the new elements inserted
+        addEventListenersToNewListItems();
+
+        // close popup
         Views.closeAddNewItemPopup();
     });
 

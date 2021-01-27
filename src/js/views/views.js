@@ -53,7 +53,7 @@ const removeDomItem = (element) => {
 
 
 
-// SHOW / CLOSE INPUT POPUP
+// SHOW / CLOSE INPUT POPUP + other things
 const showAddNewItemPopup = event => {
     let element;
     if(event.currentTarget.id === 'income-btn') {
@@ -75,6 +75,20 @@ const closeAddNewItemPopup = () => {
     document.getElementById('dark-screen-popup').remove();
 }
 
+const selectCategory = (e) => {
+    dom.addNewItemPopup.radioBtns.forEach(radio => {
+        radio.parentElement.style.backgroundColor = '#ffffff';
+    });
+    if(e.target.checked) {
+        e.target.parentElement.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-inputs');
+    }
+}
+
+
+
+
+
+
 
 
 const updateState = (state) => {
@@ -87,31 +101,30 @@ const updateState = (state) => {
 const allowOnlyNumbersAndMathSymbols = (element) => {
     element.addEventListener('input', async e => {
         e.preventDefault();
+        console.log(e);
         if(document.querySelector('.input-box-placeholder').style.visibility !== 'hidden'){
             document.querySelector('.input-box-placeholder').style.visibility = 'hidden';
         }
-        const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '/', '*'];
 
-        const arr = e.target.textContent.split('');
-        const value = arr[arr.length - 1];
+        // const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '/', '*'];
+        const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
 
-        let isAllowed = false;
-        allowedChars.forEach(el => {
-            if(el === value) {
-                isAllowed = true;
-            };
+        let isOk = false;
+        allowedChars.forEach(char => {
+            if(e.data === char) isOk = true;
         });
-        
-        if(isAllowed === false) arr.pop();
-        
-        e.target.textContent = arr.join('');
+
+        if(!isOk) {
+            const arr = e.target.textContent.split(e.data);
+            e.target.textContent = arr.join('');
+        }
     });
 }
 
-const clearInputs = () => {
-    dom.inputDescription.value = '';
-    dom.inputValue.value = '';
-}
+// const clearInputs = () => {
+//     dom.inputDescription.value = '';
+//     dom.inputValue.value = '';
+// }
 
 const addItemHoverClass = (e) => {
     dom.listsItems.forEach(item => {
@@ -126,9 +139,10 @@ const Views = {
     removeDomItem: removeDomItem,
     updateState: updateState,
     showAddNewItemPopup: showAddNewItemPopup,
+    selectCategory: selectCategory,
     closeAddNewItemPopup: closeAddNewItemPopup,
     allowOnlyNumbersAndMathSymbols: allowOnlyNumbersAndMathSymbols,
-    clearInputs: clearInputs,
+    // clearInputs: clearInputs,
     addItemHoverClass: addItemHoverClass
 }
 

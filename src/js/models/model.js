@@ -50,7 +50,7 @@ const createNewEntry = (input) => {
     input.curency = state.curency;
     Views.addNewItemToDOM(input);
     Views.updateState(state);
-    Views.clearInputs();
+    // Views.clearInputs();
 
     updateLocalStorage(state);
     console.log(state);

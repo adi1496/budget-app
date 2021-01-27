@@ -179,6 +179,10 @@ body {
     background-color: #e9e6e6;
 }
 
+.radio-btn {
+    display: none;
+}
+
 .category-icon {
     width: 4rem;
     height: 4rem;
@@ -219,9 +223,9 @@ body {
     color: var(--color-inputs);
 }
 
-.buttons {
+/* .buttons {
 
-}
+} */
 
 .new-btn {
     padding: 2rem 4rem;
