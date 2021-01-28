@@ -2,3 +2,7 @@
 ## Track your money in a smart way
 
 ### The app is available here: https://adi1496.github.io/budget-app/
+
+## Credits
+Firebase: https://firebase.google.com/docs/web/setup
+Simple Vanilla JS Routing System: https://medium.com/altcampus/implementing-simple-spa-routing-using-vanilla-javascript-53abe399bf3c

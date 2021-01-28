@@ -1,3 +1,8 @@
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
+
+// import firebaseConfig from './utils/firebaseConfig.js';
+
 import dom, {refreshDOM, refreshAddNewItemPopupDOM} from './utils/dom.js';
 // import State from './utils/state.js';
 import Model from './models/model.js';
@@ -6,6 +11,7 @@ import Views from './views/views.js';
 const initApp = () => {
     const state = Model.initState();
     Views.initView(state);
+    // firebase.initializeApp(firebaseConfig);
 }
 
 const addEventListenersToNewListItems = () => {

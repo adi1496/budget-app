@@ -4,6 +4,8 @@
   "description": "Track your money in a smart way",
   "main": "index.js",
   "scripts": {
+    "start": "live-server src/",
+    "watch:js": "parcel watch ./src/js/index.js --out-dir ./src/js-bundler --out-file bundle.js",
     "deploy": "gh-pages -d dest"
   },
   "repository": {
@@ -15,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/adi1496/budget-app/issues"
   },
-  "homepage": "https://github.com/adi1496/budget-app#readme"
+  "homepage": "https://github.com/adi1496/budget-app#readme",
+  "dependencies": {
+    "firebase": "^8.2.4"
+  }
 }
