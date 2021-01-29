@@ -5,7 +5,7 @@ import Functions from './../utils/functions.js';
 
 // Update localStorage
 const updateLocalStorage = (newState) => {
-    window.localStorage.setItem(document.getElementById('heading-month').dataset.id, JSON.stringify(newState));
+    window.localStorage.setItem(Functions.getMonthYearLocalStorage(), JSON.stringify(newState));
 }
 
 //Init State

@@ -4,8 +4,8 @@ import Functions from './../utils/functions.js';
 
 const initView = (state) => {
     dom.curency.forEach(el => el.textContent = state.curency);
-    dom.headingMonth.textContent = Functions.getMonthYear();
-    dom.headingMonth.dataset.id = Functions.getMonthYearLocalStorage();
+    // dom.headingMonth.textContent = Functions.getMonthYear();
+    // dom.headingMonth.dataset.id = Functions.getMonthYearLocalStorage();
     dom.balance.textContent = state.balance;
     dom.monthIncome.textContent = state.monthIncomesValue;
     dom.monthExpense.textContent = state.monthExpensesValue;
@@ -99,9 +99,9 @@ const updateState = (state) => {
 }
 
 const allowOnlyNumbersAndMathSymbols = (element) => {
-    element.addEventListener('input', async e => {
+    element.addEventListener('input', e => {
         e.preventDefault();
-        console.log(e);
+        // console.log(e);
         if(document.querySelector('.input-box-placeholder').style.visibility !== 'hidden'){
             document.querySelector('.input-box-placeholder').style.visibility = 'hidden';
         }
