@@ -1,4 +1,6 @@
 //3rd party modules
+// import '@babel/polyfill';
+import 'regenerator-runtime/runtime';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';

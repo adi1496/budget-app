@@ -1,16 +1,20 @@
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 import dom, {initDOM, refreshDOM, refreshAddNewItemPopupDOM} from './../utils/dom.js';
-// import State from './utils/state.js';
+
 import Model from './../models/model.js';
 import mainPageViews from './../views/views.js';
 import {mainPage} from './../utils/pages.js';
 
 
 
-const mainPageController = (firebase) => {
+const mainPageController = async () => {
     document.getElementById('root').innerHTML = mainPage;
     initDOM();
 
-    const state = Model.initState();
+    const state = await Model.initState();
+    console.log(state);
     mainPageViews.initView(state);
     controller(firebase);
     addEventListenersToNewListItems();

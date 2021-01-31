@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/adi1496/budget-app#readme",
   "dependencies": {
-    "firebase": "^8.2.4"
+    "firebase": "^8.2.4",
+    "regenerator-runtime": "^0.13.7"
   }
 }

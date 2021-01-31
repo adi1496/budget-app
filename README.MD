@@ -5,4 +5,4 @@
 
 ## Credits
 Firebase: https://firebase.google.com/docs/web/setup
-Simple Vanilla JS Routing System: https://medium.com/altcampus/implementing-simple-spa-routing-using-vanilla-javascript-53abe399bf3c
+Parcel, how to fix the `regeneratorRuntime is not defined` error: https://flaviocopes.com/parcel-regeneratorruntime-not-defined/
