@@ -35,8 +35,19 @@ body {
     font-family: 'Montserrat Alternates', sans-serif;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    min-height: 100vh;
 }
 
+.error {
+    font-size: 1.5rem;
+    color: var(--primary-color-red);
+}
+
+
+
+/*****************************************************************************************
+                                            MAIN PAGE
+******************************************************************************************/
 
 
 
@@ -47,8 +58,39 @@ body {
     grid-column: 1 / -1;
     width: 100%;
     height: 6rem;
-    background-color: #097a09;
+    background-color: #212221;
     position: fixed;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.user-img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+}
+
+.logout-btn {
+    margin-left: 1.5rem;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: var(--color-white);
+    font-family: inherit;
+    font-size: 1.8rem;
+    cursor: pointer;
+    height: 100%;
+    padding: 0 1rem;
+}
+
+.logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.103);
 }
 
 
@@ -318,7 +360,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* margin-top: 6rem; */
+    margin-top: 5rem;
 }
 
 .logo {
@@ -704,3 +746,75 @@ input::placeholder {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*****************************************************************************************
+                                LOGIN - SIGNUP PAGE - NEW USER PAGE
+******************************************************************************************/
+
+
+.login-form,
+.new-user-form {
+    grid-column: 1 / -1;
+    justify-self: center;
+    align-self: center;
+    /* background-color: #e7e7eb; */
+    padding: 2rem;
+    border-radius: 5px;
+}
+
+.heading-center {
+    text-align: center;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+}
+
+.label {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.input-field {
+    padding: 0 1rem;
+    outline: none;
+    font-size: 2rem;
+    height: 4rem;
+}
+
+.login-btn {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.google-btn {
+    width: 100%;
+    background-color: var(--primary-color-blue);
+    color: var(--color-white);
+}
+
+.question {
+    font-size: 1.7rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.message {
+    font-size: 1.9rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
