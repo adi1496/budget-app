@@ -3,9 +3,8 @@ import placeholders from './../utils/placeholders.js';
 import Functions from './../utils/functions.js';
 
 const initView = (state) => {
-    dom.curency.forEach(el => el.textContent = state.curency);
-    // dom.headingMonth.textContent = Functions.getMonthYear();
-    // dom.headingMonth.dataset.id = Functions.getMonthYearLocalStorage();
+    const curency = JSON.parse(window.localStorage.getItem('user')).curency;
+    dom.curency.forEach(el => el.textContent = curency);
     dom.balance.textContent = state.balance;
     dom.monthIncome.textContent = state.monthIncomesValue;
     dom.monthExpense.textContent = state.monthExpensesValue;
@@ -21,11 +20,12 @@ const firstLetterUppercase = (text) => {
 }
 
 const addNewItemToDOM = (input) => {
+    input.curency = JSON.parse(window.localStorage.getItem('user')).curency;
     let element = placeholders.itemPlaceholder.replace('{%name%}', firstLetterUppercase(input.name));
     element = element.replace('{%id%}', input.id);
     element = element.replace('{%type%}', input.type);
     element = element.replace('{%description%}', input.description);
-    element = element.replace('{%value%}', `${input.value}${input.curency}`);
+    element = element.replace('{%value%}', `${input.value} ${input.curency}`);
 
     if(input.type === '+'){
         element = element.replace('{%class-color%}', 'item-value-blue');
@@ -133,7 +133,7 @@ const addItemHoverClass = (e) => {
     e.currentTarget.classList.toggle('item-hover');
 }
 
-const Views = {
+const mainPageViews = {
     initView: initView,
     addNewItemToDOM: addNewItemToDOM,
     removeDomItem: removeDomItem,
@@ -146,4 +146,4 @@ const Views = {
     addItemHoverClass: addItemHoverClass
 }
 
-export default Views;
+export default mainPageViews;

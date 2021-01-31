@@ -6,7 +6,6 @@ class State {
         this.monthExpensesPercentage = data.monthExpensesPercentage;
         this.incomes = data.incomes;
         this.expenses = data.expenses;
-        this.curency = data.curency;
     }
 
     calcPercentage() {

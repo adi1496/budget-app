@@ -6,6 +6,7 @@
   "scripts": {
     "start": "live-server src/",
     "watch:js": "parcel watch ./src/js/index.js --out-dir ./src/js-bundler --out-file bundle.js",
+    "build:js": "parcel build ./src/js/index.js --out-dir ./dest/js-bundler --out-file bundle.js",
     "deploy": "gh-pages -d dest"
   },
   "repository": {

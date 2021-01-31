@@ -1,18 +1,17 @@
 import dom, {initDOM, refreshDOM, refreshAddNewItemPopupDOM} from './../utils/dom.js';
 // import State from './utils/state.js';
 import Model from './../models/model.js';
-import Views from './../views/views.js';
+import mainPageViews from './../views/views.js';
 import {mainPage} from './../utils/pages.js';
 
 
 
-const initMainPage = (firebase) => {
-    window.history.pushState({}, 'Budget App', '/');
+const mainPageController = (firebase) => {
     document.getElementById('root').innerHTML = mainPage;
     initDOM();
 
     const state = Model.initState();
-    Views.initView(state);
+    mainPageViews.initView(state);
     controller(firebase);
     addEventListenersToNewListItems();
 }
@@ -23,18 +22,20 @@ const controller = (firebase) => {
     dom.logOutBtn.addEventListener('click', e => {
         e.preventDefault();
         firebase.auth().signOut();
-    })
+    });
 }
 
+
+// Add event listener to every new items added to the page (income or expese)
 const addEventListenersToNewListItems = () => {
-    dom.listsItems.forEach(item => item.addEventListener('click', Views.addItemHoverClass));
+    dom.listsItems.forEach(item => item.addEventListener('click', mainPageViews.addItemHoverClass));
 
     dom.deleteListItem.forEach(el => {
         el.addEventListener('click', e => {
             e.preventDefault();
             const element = e.currentTarget.parentElement.parentElement;
 
-            Views.removeDomItem(element);
+            mainPageViews.removeDomItem(element);
             Model.deleteItemFromState(element.dataset.type, element.dataset.id);
 
         });
@@ -49,10 +50,10 @@ const addEventListenersToNewListItems = () => {
 // activate ADD NEW ITEM POPUP
 function activateAddNewItemPopup(event) {
     event.preventDefault();
-    Views.showAddNewItemPopup(event);
+    mainPageViews.showAddNewItemPopup(event);
     refreshAddNewItemPopupDOM();
 
-    Views.allowOnlyNumbersAndMathSymbols(dom.addNewItemPopup.inputValue);
+    mainPageViews.allowOnlyNumbersAndMathSymbols(dom.addNewItemPopup.inputValue);
     dom.addNewItemPopup.inputDescription.addEventListener('input', e => {
         if(dom.addNewItemPopup.descriptionBoxPlaceholder.style.visibility !== 'hidden'){
             dom.addNewItemPopup.descriptionBoxPlaceholder.style.visibility = 'hidden';
@@ -61,13 +62,13 @@ function activateAddNewItemPopup(event) {
 
 
     dom.addNewItemPopup.radioBtns.forEach(radioBtn => {
-        radioBtn.addEventListener('change', Views.selectCategory);
+        radioBtn.addEventListener('change', mainPageViews.selectCategory);
     })
 
     dom.addNewItemPopup.cancelBtn.addEventListener('click', e => {
         e.preventDefault();
         
-        Views.closeAddNewItemPopup();
+        mainPageViews.closeAddNewItemPopup();
     });
 
     dom.addNewItemPopup.submitBtn.addEventListener('click', e => {
@@ -90,11 +91,11 @@ function activateAddNewItemPopup(event) {
         addEventListenersToNewListItems();
 
         // close popup
-        Views.closeAddNewItemPopup();
+        mainPageViews.closeAddNewItemPopup();
     });
 
 
 }
 
 
-export default initMainPage;
+export default mainPageController;

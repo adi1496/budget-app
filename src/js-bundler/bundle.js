@@ -39880,9 +39880,22 @@ var getMonthYearLocalStorage = function getMonthYearLocalStorage() {
   return "".concat(monthNames[date.getMonth()], "-").concat(date.getFullYear());
 };
 
+var printErrorLoginPage = function printErrorLoginPage(message, pivotElement) {
+  var err = document.createElement('div');
+  err.classList.add('error');
+  err.textContent = message;
+
+  if (document.querySelector('.error')) {
+    document.querySelector('.error').remove();
+  }
+
+  pivotElement.insertAdjacentElement('afterend', err);
+};
+
 var Functions = {
   getMonthYear: getMonthYear,
-  getMonthYearLocalStorage: getMonthYearLocalStorage
+  getMonthYearLocalStorage: getMonthYearLocalStorage,
+  printErrorLoginPage: printErrorLoginPage
 };
 var _default = Functions;
 exports.default = _default;
@@ -39907,11 +39920,11 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var initView = function initView(state) {
-  _dom.default.curency.forEach(function (el) {
-    return el.textContent = state.curency;
-  }); // dom.headingMonth.textContent = Functions.getMonthYear();
-  // dom.headingMonth.dataset.id = Functions.getMonthYearLocalStorage();
+  var curency = JSON.parse(window.localStorage.getItem('user')).curency;
 
+  _dom.default.curency.forEach(function (el) {
+    return el.textContent = curency;
+  });
 
   _dom.default.balance.textContent = state.balance;
   _dom.default.monthIncome.textContent = state.monthIncomesValue;
@@ -39932,12 +39945,14 @@ var firstLetterUppercase = function firstLetterUppercase(text) {
 };
 
 var addNewItemToDOM = function addNewItemToDOM(input) {
+  input.curency = JSON.parse(window.localStorage.getItem('user')).curency;
+
   var element = _placeholders.default.itemPlaceholder.replace('{%name%}', firstLetterUppercase(input.name));
 
   element = element.replace('{%id%}', input.id);
   element = element.replace('{%type%}', input.type);
   element = element.replace('{%description%}', input.description);
-  element = element.replace('{%value%}', "".concat(input.value).concat(input.curency));
+  element = element.replace('{%value%}', "".concat(input.value, " ").concat(input.curency));
 
   if (input.type === '+') {
     element = element.replace('{%class-color%}', 'item-value-blue');
@@ -40037,7 +40052,7 @@ var addItemHoverClass = function addItemHoverClass(e) {
   e.currentTarget.classList.toggle('item-hover');
 };
 
-var Views = {
+var mainPageViews = {
   initView: initView,
   addNewItemToDOM: addNewItemToDOM,
   removeDomItem: removeDomItem,
@@ -40049,7 +40064,7 @@ var Views = {
   // clearInputs: clearInputs,
   addItemHoverClass: addItemHoverClass
 };
-var _default = Views;
+var _default = mainPageViews;
 exports.default = _default;
 },{"./../utils/dom.js":"utils/dom.js","./../utils/placeholders.js":"utils/placeholders.js","./../utils/functions.js":"utils/functions.js"}],"utils/state.js":[function(require,module,exports) {
 "use strict";
@@ -40075,7 +40090,6 @@ var State = /*#__PURE__*/function () {
     this.monthExpensesPercentage = data.monthExpensesPercentage;
     this.incomes = data.incomes;
     this.expenses = data.expenses;
-    this.curency = data.curency;
   }
 
   _createClass(State, [{
@@ -40182,25 +40196,8 @@ var updateLocalStorage = function updateLocalStorage(newState) {
 var state;
 
 var initState = function initState() {
-  var data = _functions.default.getMonthYearLocalStorage();
-
-  var localStorageData;
-
-  if (window.localStorage.getItem(data)) {
-    localStorageData = JSON.parse(window.localStorage.getItem(data));
-  } else {
-    localStorageData = {
-      balance: 0,
-      monthIncomesValue: 0,
-      monthExpensesValue: 0,
-      monthExpensesPercentage: 0,
-      incomes: [],
-      expenses: [],
-      curency: '€'
-    };
-  }
-
-  state = new _state.default(localStorageData);
+  var localStorageData = window.localStorage.getItem(_functions.default.getMonthYearLocalStorage());
+  state = new _state.default(JSON.parse(localStorageData));
   return state;
 }; // Create New Income / Expense
 
@@ -40256,13 +40253,15 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.signupPage = exports.loginPage = exports.mainPage = void 0;
+exports.newUserPage = exports.signupPage = exports.loginPage = exports.mainPage = void 0;
 var mainPage = "<nav class=\"nav\">\n    <div class=\"user-box\">\n        <img src=\"img/user.png\" alt=\"user-img\" class=\"user-img\">\n        <button class=\"logout-btn\" id=\"logout-btn\">Logout</button>\n    </div>\n</nav>\n\n<button class=\"add-fixed-btn income-btn\" id=\"income-btn\">+</button>\n<button class=\"add-fixed-btn expense-btn\" id=\"expense-btn\">-</button>\n\n<header class=\"header\">\n    <div class=\"logo\">\n        <h1 class=\"heading-1\">Budget</h1>\n        <h1 class=\"heading-1\">APP</h1>\n    </div>\n\n    <!-- <h2 class=\"heading-2\">Your Budget <span id=\"heading-month\">December 2020</span></h2> -->\n    <div class=\"balance\">Your Balance: <span class=\"balance-value\" id=\"balance-value\"></span> <span class=\"balance-value\" id=\"curency\">\u20AC</span></div>\n\n    <div class=\"box-bar\">\n        <div class=\"box-bar-text\">Income:</div>\n        <div class=\"box-bar-sign\">+</div>\n        <div class=\"box-bar-value\"><span id=\"income-month\"></span> <span id=\"curency\">\u20AC</span></div>\n    </div>\n    <div class=\"box-bar box-bar-red\">\n        <div class=\"box-bar-text\">Expenses:</div>\n        <div class=\"box-bar-sign\">-</div>\n        <div class=\"box-bar-value\"><span id=\"expense-month\"></span> <span id=\"curency\">\u20AC</span></div>\n        <div class=\"box-bar-percent\" id=\"expense-month-percent\"></div>\n    </div>\n</header>\n\n<section class=\"section-list\">\n    <div class=\"section-list-box\">\n        <h3 class=\"heading-3 heading-3-blue\">Incomes</h3>\n        <ul class=\"list incomes-list\" id=\"incomes-list\">\n\n        </ul>\n    </div>\n\n\n    <div class=\"section-list-box\">\n        <h3 class=\"heading-3 heading-3-red\">Expenses</h3>\n        <ul class=\"list expenses-list\" id=\"expenses-list\">\n        \n        </ul>\n    </div>\n\n</section>";
 exports.mainPage = mainPage;
 var loginPage = "<form class=\"login-form\">\n<h3 class=\"heading-3 heading-center\" id=\"title\">Welcome back</h3>\n<div class=\"login-field\">\n    <label for=\"email\" class=\"label\">Email</label>\n    <input type=\"email\" name=\"email\" id=\"email\" class=\"input-field\">\n</div>\n<div class=\"login-field\">\n    <label for=\"password\" class=\"label\">Password</label>\n    <input type=\"password\" name=\"password\" id=\"password\" class=\"input-field\">\n</div>\n\n<button class=\"new-btn login-btn\" id=\"login-btn\">Login</button>\n<button class=\"new-btn google-btn\" id=\"login-with-google-btn\">Login With Google</button>\n\n<p class=\"question\">Forgot password? Reset it <a href=\"#\">here</a></p>\n<p class=\"question\">Don't have an account? Then <a href=\"#\" id=\"to-signup\">Sign Up</a></p>\n</form>";
 exports.loginPage = loginPage;
 var signupPage = "<form class=\"login-form\">\n<h3 class=\"heading-3 heading-center\" id=\"title\">Welcome back</h3>\n<div class=\"login-field\">\n    <label for=\"name\" class=\"label\">Name</label>\n    <input type=\"text\" name=\"name\" id=\"name\" class=\"input-field\">\n</div>\n<div class=\"login-field\">\n    <label for=\"email\" class=\"label\">Email</label>\n    <input type=\"email\" name=\"email\" id=\"email\" class=\"input-field\">\n</div>\n<div class=\"login-field\">\n    <label for=\"password\" class=\"label\">Password</label>\n    <input type=\"password\" name=\"password\" id=\"password\" class=\"input-field\">\n</div>\n<div class=\"login-field\">\n    <label for=\"password-confirm\" class=\"label\">Password Confirmation</label>\n    <input type=\"password\" name=\"password-confirm\" id=\"password-confirm\" class=\"input-field\">\n</div>\n\n<button class=\"new-btn login-btn\" id =\"sign-up-btn\">Sign Up</button>\n\n<p class=\"question\">Already have an account? Then <a href=\"#\" id=\"to-login\">Log In</a></p>\n</form>";
 exports.signupPage = signupPage;
+var newUserPage = "<form class=\"new-user-form\">\n<h3 class=\"heading-3 heading-center\" id=\"title\">Welcome <span id=\"user-name\"></span></h3>\n<p class=\"message\">Please select your curency\uD83D\uDCB0</p>\n<div class=\"login-field\">\n    <label for=\"name\" class=\"label\">Name</label>\n    <select name=\"curency\" id=\"curency\">\n        <option value=\"\u20AC\" selected>Euro - \u20AC</option>\n        <option value=\"$\">US Dollars - $</option>\n        <option value=\"RON\">Romanian Leu - RON</option>\n        <option value=\"\xA3\">Great Britain Pound - \xA3</option>\n    </select>\n</div>\n\n<button class=\"new-btn login-btn\" id =\"ok-btn\">I will use this</button>\n</form>";
+exports.newUserPage = newUserPage;
 },{}],"controllers/mainPageController.js":[function(require,module,exports) {
 "use strict";
 
@@ -40286,8 +40285,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // import State from './utils/state.js';
-var initMainPage = function initMainPage(firebase) {
-  window.history.pushState({}, 'Budget App', '/');
+var mainPageController = function mainPageController(firebase) {
   document.getElementById('root').innerHTML = _pages.mainPage;
   (0, _dom.initDOM)();
 
@@ -40308,7 +40306,8 @@ var controller = function controller(firebase) {
     e.preventDefault();
     firebase.auth().signOut();
   });
-};
+}; // Add event listener to every new items added to the page (income or expese)
+
 
 var addEventListenersToNewListItems = function addEventListenersToNewListItems() {
   _dom.default.listsItems.forEach(function (item) {
@@ -40377,7 +40376,7 @@ function activateAddNewItemPopup(event) {
   });
 }
 
-var _default = initMainPage;
+var _default = mainPageController;
 exports.default = _default;
 },{"./../utils/dom.js":"utils/dom.js","./../models/model.js":"models/model.js","./../views/views.js":"views/views.js","./../utils/pages.js":"utils/pages.js"}],"controllers/authController.js":[function(require,module,exports) {
 "use strict";
@@ -40388,6 +40387,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _pages = require("./../utils/pages.js");
+
+var _functions = _interopRequireDefault(require("./../utils/functions.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var initAuthController = function initAuthController(firebase) {
   controller(firebase, 'login');
@@ -40409,6 +40412,7 @@ function loadLoginPage(firebase) {
   var dom = {
     title: document.getElementById('title'),
     loginBtn: document.getElementById('login-btn'),
+    loginGoogleBtn: document.getElementById('login-with-google-btn'),
     email: document.getElementById('email'),
     password: document.getElementById('password'),
     toSignUp: document.getElementById('to-signup')
@@ -40419,12 +40423,15 @@ function loadLoginPage(firebase) {
       // Signed in
       console.log(userCredential); // ...
     }).catch(function (error) {
-      var err = document.createElement('div');
-      err.classList.add('error');
-      err.textContent = error.message;
-      dom.title.insertAdjacentElement('afterend', err);
+      _functions.default.printErrorLoginPage(error.message, dom.title);
+
       console.log(error);
     });
+  });
+  dom.loginGoogleBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    _functions.default.printErrorLoginPage('Button currently unavailable!!!🔥', dom.title);
   });
   dom.toSignUp.addEventListener('click', function (e) {
     e.preventDefault();
@@ -40455,12 +40462,25 @@ function loadSignUpPage(firebase) {
 
     firebase.auth().createUserWithEmailAndPassword(dom.email.value, dom.password.value).then(function (userCredential) {
       // Signed in
-      console.log(userCredential.user.uid);
+      console.log(userCredential);
       firebase.firestore().collection('users').doc(userCredential.user.uid).set({
         name: dom.name.value,
-        email: dom.email.value,
-        isNewUser: true
-      }); // ...
+        email: dom.email.value
+      });
+      var initialState = {
+        balance: 0,
+        monthIncomesValue: 0,
+        monthExpensesValue: 0,
+        monthExpensesPercentage: 0,
+        incomes: [],
+        expenses: []
+      };
+
+      var monthYear = _functions.default.getMonthYearLocalStorage();
+
+      firebase.firestore().collection('users').doc(userCredential.user.uid).collection('months').doc(monthYear).set(initialState);
+      window.localStorage.setItem(monthYear, JSON.stringify(initialState));
+      window.localStorage.setItem('isNewUser', true);
     }).catch(function (error) {
       var err = document.createElement('div');
       err.classList.add('error');
@@ -40477,6 +40497,36 @@ function loadSignUpPage(firebase) {
 
 var _default = initAuthController;
 exports.default = _default;
+},{"./../utils/pages.js":"utils/pages.js","./../utils/functions.js":"utils/functions.js"}],"controllers/newUserController.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _pages = require("./../utils/pages.js");
+
+var newUserPageController = function newUserPageController(firebase, userId) {
+  document.getElementById('root').innerHTML = _pages.newUserPage;
+  document.getElementById('ok-btn').addEventListener('click', function (e) {
+    e.preventDefault();
+    var curency = document.getElementById('curency').value;
+    firebase.firestore().collection('users').doc(userId).update({
+      curency: curency
+    });
+    var user = {
+      userId: userId,
+      curency: curency
+    };
+    window.localStorage.removeItem('isNewUser');
+    window.localStorage.setItem('user', JSON.stringify(user));
+    window.location.reload();
+  });
+};
+
+var _default = newUserPageController;
+exports.default = _default;
 },{"./../utils/pages.js":"utils/pages.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -40492,6 +40542,8 @@ var _mainPageController = _interopRequireDefault(require("./controllers/mainPage
 
 var _authController = _interopRequireDefault(require("./controllers/authController.js"));
 
+var _newUserController = _interopRequireDefault(require("./controllers/newUserController.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //3rd party modules
@@ -40502,7 +40554,13 @@ var initApp = function initApp() {
   _app.default.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log(user);
-      (0, _mainPageController.default)(_app.default);
+      window.history.pushState({}, 'Budget App', '/');
+
+      if (window.localStorage.getItem('isNewUser')) {
+        (0, _newUserController.default)(_app.default, user.uid);
+      } else {
+        (0, _mainPageController.default)(_app.default);
+      }
     } else {
       console.log('no user');
       (0, _authController.default)(_app.default);
@@ -40511,7 +40569,7 @@ var initApp = function initApp() {
 };
 
 initApp();
-},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/auth":"../../node_modules/firebase/auth/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./utils/firebaseConfig.js":"utils/firebaseConfig.js","./controllers/mainPageController.js":"controllers/mainPageController.js","./controllers/authController.js":"controllers/authController.js"}],"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/auth":"../../node_modules/firebase/auth/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./utils/firebaseConfig.js":"utils/firebaseConfig.js","./controllers/mainPageController.js":"controllers/mainPageController.js","./controllers/authController.js":"controllers/authController.js","./controllers/newUserController.js":"controllers/newUserController.js"}],"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -40539,7 +40597,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65340" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56989" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

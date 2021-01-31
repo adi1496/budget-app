@@ -96,3 +96,21 @@ export const signupPage = `<form class="login-form">
 
 <p class="question">Already have an account? Then <a href="#" id="to-login">Log In</a></p>
 </form>`;
+
+
+
+export const newUserPage = `<form class="new-user-form">
+<h3 class="heading-3 heading-center" id="title">Welcome <span id="user-name"></span></h3>
+<p class="message">Please select your curency💰</p>
+<div class="login-field">
+    <label for="name" class="label">Name</label>
+    <select name="curency" id="curency">
+        <option value="€" selected>Euro - €</option>
+        <option value="$">US Dollars - $</option>
+        <option value="RON">Romanian Leu - RON</option>
+        <option value="£">Great Britain Pound - £</option>
+    </select>
+</div>
+
+<button class="new-btn login-btn" id ="ok-btn">I will use this</button>
+</form>`;

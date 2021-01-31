@@ -11,22 +11,8 @@ const updateLocalStorage = (newState) => {
 //Init State
 let state;
 const initState = () => {
-    const data = Functions.getMonthYearLocalStorage();
-    let localStorageData;
-    if(window.localStorage.getItem(data)){
-        localStorageData = JSON.parse(window.localStorage.getItem(data));
-    }else {
-        localStorageData = {
-            balance: 0,
-            monthIncomesValue: 0,
-            monthExpensesValue: 0,
-            monthExpensesPercentage: 0,
-            incomes: [],
-            expenses: [],
-            curency: '€',
-        }
-    }
-    state = new State(localStorageData);
+    const localStorageData = window.localStorage.getItem(Functions.getMonthYearLocalStorage());
+    state = new State(JSON.parse(localStorageData));
 
     return state;
 }

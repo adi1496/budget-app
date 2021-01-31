@@ -14,9 +14,20 @@ const getMonthYearLocalStorage = () => {
     return `${monthNames[date.getMonth()]}-${date.getFullYear()}`;
 }
 
+const printErrorLoginPage = (message, pivotElement) => {
+    const err = document.createElement('div');
+    err.classList.add('error');
+    err.textContent = message;
+    if(document.querySelector('.error')){
+        document.querySelector('.error').remove();
+    }
+    pivotElement.insertAdjacentElement('afterend', err);
+}
+
 const Functions = {
     getMonthYear: getMonthYear,
-    getMonthYearLocalStorage: getMonthYearLocalStorage
+    getMonthYearLocalStorage: getMonthYearLocalStorage,
+    printErrorLoginPage: printErrorLoginPage
 }
 
 export default Functions;

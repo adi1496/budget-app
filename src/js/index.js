@@ -5,8 +5,9 @@ import 'firebase/firestore';
 
 // Own modules
 import firebaseConfig from './utils/firebaseConfig.js';
-import mainPage from './controllers/mainPageController.js';
+import mainPageController from './controllers/mainPageController.js';
 import authController from './controllers/authController.js';
+import newUserPageController from './controllers/newUserController.js';
 
 const initApp = () => {
     firebase.initializeApp(firebaseConfig);
@@ -14,7 +15,12 @@ const initApp = () => {
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
             console.log(user);
-            mainPage(firebase);
+            window.history.pushState({}, 'Budget App', '/');
+            if(window.localStorage.getItem('isNewUser')){
+                newUserPageController(firebase, user.uid);
+            }else {
+                mainPageController(firebase);
+            }
         }else {
             console.log('no user');
             authController(firebase);

@@ -760,11 +760,12 @@ input::placeholder {
 
 
 /*****************************************************************************************
-                                            LOGIN - SIGNUP PAGE
+                                LOGIN - SIGNUP PAGE - NEW USER PAGE
 ******************************************************************************************/
 
 
-.login-form {
+.login-form,
+.new-user-form {
     grid-column: 1 / -1;
     justify-self: center;
     align-self: center;
@@ -810,4 +811,10 @@ input::placeholder {
     font-size: 1.7rem;
     text-align: center;
     margin-top: 2rem;
+}
+
+.message {
+    font-size: 1.9rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
 }
