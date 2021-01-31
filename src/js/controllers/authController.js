@@ -7,11 +7,11 @@ const initAuthController = (firebase) => {
 
 const controller = (firebase, page) => {
     if(page === 'login') {
-        window.history.pushState({}, 'login', '/login');
+        // window.history.pushState({}, 'login', '/login');
         document.getElementById('root').innerHTML = loginPage;
         loadLoginPage(firebase);
     }else {
-        window.history.pushState({}, 'signup', '/signup');
+        // window.history.pushState({}, 'signup', '/signup');
         document.getElementById('root').innerHTML = signupPage;
         loadSignUpPage(firebase);
     }

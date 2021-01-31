@@ -40398,11 +40398,11 @@ var initAuthController = function initAuthController(firebase) {
 
 var controller = function controller(firebase, page) {
   if (page === 'login') {
-    window.history.pushState({}, 'login', '/login');
+    // window.history.pushState({}, 'login', '/login');
     document.getElementById('root').innerHTML = _pages.loginPage;
     loadLoginPage(firebase);
   } else {
-    window.history.pushState({}, 'signup', '/signup');
+    // window.history.pushState({}, 'signup', '/signup');
     document.getElementById('root').innerHTML = _pages.signupPage;
     loadSignUpPage(firebase);
   }
@@ -40553,8 +40553,7 @@ var initApp = function initApp() {
 
   _app.default.auth().onAuthStateChanged(function (user) {
     if (user) {
-      console.log(user);
-      window.history.pushState({}, 'Budget App', '/');
+      console.log(user); // window.history.pushState({}, 'Budget App', '/');
 
       if (window.localStorage.getItem('isNewUser')) {
         (0, _newUserController.default)(_app.default, user.uid);

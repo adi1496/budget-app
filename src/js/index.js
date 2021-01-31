@@ -15,7 +15,7 @@ const initApp = () => {
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
             console.log(user);
-            window.history.pushState({}, 'Budget App', '/');
+            // window.history.pushState({}, 'Budget App', '/');
             if(window.localStorage.getItem('isNewUser')){
                 newUserPageController(firebase, user.uid);
             }else {
