@@ -6,3 +6,4 @@
 ## Credits
 Firebase: https://firebase.google.com/docs/web/setup
 Parcel, how to fix the `regeneratorRuntime is not defined` error: https://flaviocopes.com/parcel-regeneratorruntime-not-defined/
+Parcel, environment variables: https://www.robertcooper.me/front-end-javascript-environment-variables

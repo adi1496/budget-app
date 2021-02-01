@@ -40956,7 +40956,7 @@ var state;
 
 var initState = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var db, userId, docRef, doc;
+    var db, userId, docRef, doc, newState;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -40964,27 +40964,34 @@ var initState = /*#__PURE__*/function () {
             db = _app.default.firestore(); // const localStorageData = window.localStorage.getItem(Functions.getMonthYearLocalStorage());
 
             userId = JSON.parse(window.localStorage.getItem('user')).userId;
-            docRef = db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()); // console.log(docRef);
-            // docRef.get().then(doc => {
-            //     if(doc.exists){
-            //         state = new State(doc.data());
-            //     }else {
-            //         console.log('No Document');
-            //     }
-            // }).catch(err => {
-            //     console.log(err);
-            // });
-
+            docRef = db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage());
             _context.next = 5;
             return docRef.get();
 
           case 5:
             doc = _context.sent;
-            console.log(doc);
-            state = new _state.default(doc.data());
+
+            if (doc.exists) {
+              // if doc exists, get the data
+              state = new _state.default(doc.data());
+            } else {
+              // if doc doesn't exist create a new doc(maybe started another month)
+              console.log('Document does not exists');
+              newState = {
+                balance: 0,
+                monthIncomesValue: 0,
+                monthExpensesValue: 0,
+                monthExpensesPercentage: 0,
+                incomes: [],
+                expenses: []
+              };
+              db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()).set(newState);
+              state = new _state.default(newState);
+            }
+
             return _context.abrupt("return", state);
 
-          case 9:
+          case 8:
           case "end":
             return _context.stop();
         }
@@ -41010,14 +41017,23 @@ var createNewEntry = function createNewEntry(input) {
     state.updateExpeses(input);
   }
 
-  input.curency = state.curency;
-
   _views.default.addNewItemToDOM(input);
 
   _views.default.updateState(state); // Views.clearInputs();
+  // updateLocalStorage(state);
 
 
-  updateLocalStorage(state);
+  var db = _app.default.firestore();
+
+  var userId = JSON.parse(window.localStorage.getItem('user')).userId;
+  db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()).set({
+    balance: state.balance,
+    monthIncomesValue: state.monthIncomesValue,
+    monthExpensesValue: state.monthExpensesValue,
+    monthExpensesPercentage: state.monthExpensesPercentage,
+    incomes: state.incomes,
+    expenses: state.expenses
+  });
   console.log(state);
 };
 
@@ -41032,7 +41048,18 @@ var deleteItemFromState = function deleteItemFromState(type, id) {
 
   _views.default.updateState(state);
 
-  updateLocalStorage(state); // console.log(state);
+  var db = _app.default.firestore();
+
+  var userId = JSON.parse(window.localStorage.getItem('user')).userId;
+  db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()).set({
+    balance: state.balance,
+    monthIncomesValue: state.monthIncomesValue,
+    monthExpensesValue: state.monthExpensesValue,
+    monthExpensesPercentage: state.monthExpensesPercentage,
+    incomes: state.incomes,
+    expenses: state.expenses
+  }); // updateLocalStorage(state);
+  // console.log(state);
 }; // Create an Object with all functions
 
 
@@ -41106,7 +41133,7 @@ var mainPageController = /*#__PURE__*/function () {
 
             _views.default.initView(state);
 
-            controller(_app.default);
+            controller();
             addEventListenersToNewListItems();
 
           case 9:
@@ -41122,14 +41149,15 @@ var mainPageController = /*#__PURE__*/function () {
   };
 }();
 
-var controller = function controller(firebase) {
+var controller = function controller() {
   _dom.default.incomeBtn.addEventListener('click', activateAddNewItemPopup);
 
   _dom.default.expenseBtn.addEventListener('click', activateAddNewItemPopup);
 
   _dom.default.logOutBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    firebase.auth().signOut();
+
+    _app.default.auth().signOut();
   });
 }; // Add event listener to every new items added to the page (income or expese)
 
@@ -41159,7 +41187,7 @@ function activateAddNewItemPopup(event) {
 
   _views.default.showAddNewItemPopup(event);
 
-  (0, _dom.refreshAddNewItemPopupDOM)();
+  (0, _dom.refreshAddNewItemPopupDOM)(); // allow only numbers and math symbols in the value input (popup)
 
   _views.default.allowOnlyNumbersAndMathSymbols(_dom.default.addNewItemPopup.inputValue);
 
@@ -41167,19 +41195,23 @@ function activateAddNewItemPopup(event) {
     if (_dom.default.addNewItemPopup.descriptionBoxPlaceholder.style.visibility !== 'hidden') {
       _dom.default.addNewItemPopup.descriptionBoxPlaceholder.style.visibility = 'hidden';
     }
-  });
+  }); // when select a type of income/expense change the style on page
+
 
   _dom.default.addNewItemPopup.radioBtns.forEach(function (radioBtn) {
     radioBtn.addEventListener('change', _views.default.selectCategory);
-  });
+  }); // close the popup with cancel button
+
 
   _dom.default.addNewItemPopup.cancelBtn.addEventListener('click', function (e) {
     e.preventDefault();
 
     _views.default.closeAddNewItemPopup();
-  });
+  }); // when submit the popup
+
 
   _dom.default.addNewItemPopup.submitBtn.addEventListener('click', function (e) {
+    e.preventDefault();
     var input = {
       type: e.currentTarget.dataset.type,
       description: _dom.default.addNewItemPopup.inputDescription.textContent,
@@ -41353,6 +41385,7 @@ var newUserPageController = function newUserPageController(firebase, userId) {
 var _default = newUserPageController;
 exports.default = _default;
 },{"./../utils/pages.js":"utils/pages.js"}],"index.js":[function(require,module,exports) {
+var process = require("process");
 "use strict";
 
 require("regenerator-runtime/runtime");
@@ -41379,6 +41412,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var initApp = function initApp() {
   _app.default.initializeApp(_firebaseConfig.default);
 
+  undefined = '123456789';
+  console.log(process.env);
+
   _app.default.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log(user); // window.history.pushState({}, 'Budget App', '/');
@@ -41396,7 +41432,7 @@ var initApp = function initApp() {
 };
 
 initApp();
-},{"regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/auth":"../../node_modules/firebase/auth/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./utils/firebaseConfig.js":"utils/firebaseConfig.js","./controllers/mainPageController.js":"controllers/mainPageController.js","./controllers/authController.js":"controllers/authController.js","./controllers/newUserController.js":"controllers/newUserController.js"}],"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/auth":"../../node_modules/firebase/auth/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./utils/firebaseConfig.js":"utils/firebaseConfig.js","./controllers/mainPageController.js":"controllers/mainPageController.js","./controllers/authController.js":"controllers/authController.js","./controllers/newUserController.js":"controllers/newUserController.js","process":"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -41424,7 +41460,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60436" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62959" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

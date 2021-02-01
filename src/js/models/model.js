@@ -19,20 +19,26 @@ const initState = async () => {
     const userId = JSON.parse(window.localStorage.getItem('user')).userId;
     const docRef = db.collection('users').doc(userId)
     .collection('months').doc(Functions.getMonthYearLocalStorage());
-    // console.log(docRef);
-    // docRef.get().then(doc => {
-    //     if(doc.exists){
-    //         state = new State(doc.data());
-    //     }else {
-    //         console.log('No Document');
-    //     }
-    // }).catch(err => {
-    //     console.log(err);
-    // });
 
     const doc = await docRef.get();
-    console.log(doc);
-    state = new State(doc.data());
+    if(doc.exists){
+        // if doc exists, get the data
+        state = new State(doc.data());
+    }else {
+        // if doc doesn't exist create a new doc(maybe started another month)
+        console.log('Document does not exists');
+        const newState = {
+            balance: 0,
+            monthIncomesValue: 0,
+            monthExpensesValue: 0,
+            monthExpensesPercentage: 0,
+            incomes: [],
+            expenses: []
+        }
+        db.collection('users').doc(userId).collection('months')
+        .doc(Functions.getMonthYearLocalStorage()).set(newState);
+        state = new State(newState);
+    }
 
     return state;
 }
@@ -53,12 +59,23 @@ const createNewEntry = (input) => {
         state.updateExpeses(input);
     }
 
-    input.curency = state.curency;
     Views.addNewItemToDOM(input);
     Views.updateState(state);
     // Views.clearInputs();
 
-    updateLocalStorage(state);
+    // updateLocalStorage(state);
+    const db = firebase.firestore();
+    const userId = JSON.parse(window.localStorage.getItem('user')).userId;
+
+    db.collection('users').doc(userId).collection('months')
+    .doc(Functions.getMonthYearLocalStorage()).set({
+        balance: state.balance,
+        monthIncomesValue: state.monthIncomesValue,
+        monthExpensesValue: state.monthExpensesValue,
+        monthExpensesPercentage: state.monthExpensesPercentage,
+        incomes: state.incomes,
+        expenses: state.expenses
+    });
     console.log(state);
 }
 
@@ -72,7 +89,20 @@ const deleteItemFromState = (type, id) => {
     }
 
     Views.updateState(state);
-    updateLocalStorage(state);
+
+    const db = firebase.firestore();
+    const userId = JSON.parse(window.localStorage.getItem('user')).userId;
+    
+    db.collection('users').doc(userId).collection('months')
+    .doc(Functions.getMonthYearLocalStorage()).set({
+        balance: state.balance,
+        monthIncomesValue: state.monthIncomesValue,
+        monthExpensesValue: state.monthExpensesValue,
+        monthExpensesPercentage: state.monthExpensesPercentage,
+        incomes: state.incomes,
+        expenses: state.expenses
+    });
+    // updateLocalStorage(state);
     // console.log(state);
 }
 

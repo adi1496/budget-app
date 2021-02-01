@@ -16,11 +16,11 @@ const mainPageController = async () => {
     const state = await Model.initState();
     console.log(state);
     mainPageViews.initView(state);
-    controller(firebase);
+    controller();
     addEventListenersToNewListItems();
 }
 
-const controller = (firebase) => {
+const controller = () => {
     dom.incomeBtn.addEventListener('click', activateAddNewItemPopup);
     dom.expenseBtn.addEventListener('click', activateAddNewItemPopup);
     dom.logOutBtn.addEventListener('click', e => {
@@ -57,6 +57,7 @@ function activateAddNewItemPopup(event) {
     mainPageViews.showAddNewItemPopup(event);
     refreshAddNewItemPopupDOM();
 
+    // allow only numbers and math symbols in the value input (popup)
     mainPageViews.allowOnlyNumbersAndMathSymbols(dom.addNewItemPopup.inputValue);
     dom.addNewItemPopup.inputDescription.addEventListener('input', e => {
         if(dom.addNewItemPopup.descriptionBoxPlaceholder.style.visibility !== 'hidden'){
@@ -64,18 +65,21 @@ function activateAddNewItemPopup(event) {
         }
     });
 
-
+    // when select a type of income/expense change the style on page
     dom.addNewItemPopup.radioBtns.forEach(radioBtn => {
         radioBtn.addEventListener('change', mainPageViews.selectCategory);
     })
 
+    // close the popup with cancel button
     dom.addNewItemPopup.cancelBtn.addEventListener('click', e => {
         e.preventDefault();
         
         mainPageViews.closeAddNewItemPopup();
     });
 
+    // when submit the popup
     dom.addNewItemPopup.submitBtn.addEventListener('click', e => {
+        e.preventDefault();
         const input = {
             type: e.currentTarget.dataset.type,
             description: dom.addNewItemPopup.inputDescription.textContent,

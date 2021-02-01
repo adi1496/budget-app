@@ -13,6 +13,8 @@ import newUserPageController from './controllers/newUserController.js';
 
 const initApp = () => {
     firebase.initializeApp(firebaseConfig);
+    process.env.api = '123456789';
+    console.log(process.env);
 
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
