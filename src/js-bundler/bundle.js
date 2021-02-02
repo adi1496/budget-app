@@ -40563,6 +40563,7 @@ var initDOM = function initDOM() {
   dom.curency = document.querySelectorAll('#curency'), dom.headingMonth = getId('heading-month'), dom.month = getId('heading-month'), dom.balance = getId('balance-value'), dom.monthIncome = getId('income-month'), dom.monthExpense = getId('expense-month'), dom.monthExpensePercent = getId('expense-month-percent'), dom.incomeBtn = getId('income-btn'), dom.expenseBtn = getId('expense-btn'), dom.addNewItemPopup = {
     inputValue: getId('input-value'),
     inputBoxPlaceholder: document.querySelector('.input-box-placeholder'),
+    categoryList: document.querySelector('.categories-list'),
     radioBtns: document.querySelectorAll('.radio-btn'),
     inputDescription: getId('input-description'),
     descriptionBoxPlaceholder: document.querySelector('.description-box-placeholder'),
@@ -40584,6 +40585,7 @@ exports.refreshDOM = refreshDOM;
 var refreshAddNewItemPopupDOM = function refreshAddNewItemPopupDOM() {
   dom.addNewItemPopup.inputValue = getId('input-value');
   dom.addNewItemPopup.inputBoxPlaceholder = document.querySelector('.input-box-placeholder');
+  dom.addNewItemPopup.categoryList = document.querySelector('.categories-list');
   dom.addNewItemPopup.radioBtns = document.querySelectorAll('.radio-btn');
   dom.addNewItemPopup.inputDescription = getId('input-description');
   dom.addNewItemPopup.descriptionBoxPlaceholder = document.querySelector('.description-box-placeholder');
@@ -40601,11 +40603,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var addPopupPlaceholder = "<div class=\"dark-screen\" id=\"dark-screen-popup\">\n<div class=\"container-add-new\">\n    <h4 class=\"heading-4\">Add New {%type%}</h4>\n    <div class=\"input-box\">\n        <div class=\"input-box-placeholder\">You can write also a mathematic expression here</div>\n        <div class=\"input-value-expression\" id=\"input-value\" contenteditable></div>\n        <svg class=\"backspace\">\n            <use xlink:href=\"img/svg/icons.svg#icon-backspace\"></use>\n        </svg>\n    </div>\n\n    <div class=\"categories-list\">\n        <label class=\"category-item\" for=\"salary\">\n            <input type=\"radio\" class=\"radio-btn\" id=\"salary\" name=\"category-item\">\n            <svg class=\"category-icon\">\n                <use xlink:href=\"img/svg/category-icons.svg#icon-coin-euro\"></use>\n            </svg>\n            <div class=\"category-description\">Salary</div>\n        </label>\n        <label class=\"category-item\" for=\"project\">\n            <input type=\"radio\" class=\"radio-btn\" id=\"project\" name=\"category-item\">\n            <svg class=\"category-icon\">\n                <use xlink:href=\"img/svg/category-icons.svg#icon-coin-euro\"></use>\n            </svg>\n            <div class=\"category-description\">Project</div>\n        </label>\n        <label class=\"category-item\" for=\"transferta\">\n            <input type=\"radio\" class=\"radio-btn\" id=\"transferta\" name=\"category-item\">\n            <svg class=\"category-icon\">\n                <use xlink:href=\"img/svg/category-icons.svg#icon-coin-euro\"></use>\n            </svg>\n            <div class=\"category-description\">Transferta</div>\n        </label>\n        <label class=\"category-item\" for=\"dividend\">\n            <input type=\"radio\" class=\"radio-btn\" id=\"dividend\" name=\"category-item\">\n            <svg class=\"category-icon\">\n                <use xlink:href=\"img/svg/category-icons.svg#icon-coin-euro\"></use>\n            </svg>\n            <div class=\"category-description\">Dividend</div>\n        </label>\n    </div>\n\n    <div class=\"description-box\">\n        <div class=\"description-box-placeholder\">Type a note</div>\n        <div class=\"input-description-div\" id=\"input-description\" contenteditable></div>\n    </div>\n\n    <div class=\"buttons\">\n        <button class=\"new-btn\" id=\"cancel-popup-btn\">Cancel</button>\n        <button class=\"new-btn {%class-btn%}\" data-type=\"{%add-type%}\" id=\"submit-btn\">Add New {%type%}</button>\n    </div>\n\n</div>\n</div>";
+var addPopupPlaceholder = "<div class=\"dark-screen\" id=\"dark-screen-popup\">\n<div class=\"container-add-new\">\n    <h4 class=\"heading-4\">Add New {%type%}</h4>\n    <div class=\"input-box\">\n        <div class=\"input-box-placeholder\">You can write also a mathematic expression here</div>\n        <div class=\"input-value-expression\" id=\"input-value\" contenteditable></div>\n        <svg class=\"backspace\">\n            <use xlink:href=\"img/svg/icons.svg#icon-backspace\"></use>\n        </svg>\n    </div>\n\n    <div class=\"categories-list\">\n    \n    </div>\n\n    <div class=\"description-box\">\n        <div class=\"description-box-placeholder\">Type a note</div>\n        <div class=\"input-description-div\" id=\"input-description\" contenteditable></div>\n    </div>\n\n    <div class=\"buttons\">\n        <button class=\"new-btn\" id=\"cancel-popup-btn\">Cancel</button>\n        <button class=\"new-btn {%class-btn%}\" data-type=\"{%add-type%}\" id=\"submit-btn\">Add New {%type%}</button>\n    </div>\n\n</div>\n</div>";
+var categoryItem = "\n<label class=\"category-item\" for=\"{%item-id%}\">\n    <input type=\"radio\" class=\"radio-btn\" id=\"{%item-id%}\" name=\"category-item\">\n    <svg class=\"category-icon\">\n        <use xlink:href=\"img/svg/category-icons.svg#icon-coin-euro\"></use>\n    </svg>\n    <div class=\"category-description\">{%item-name%}</div>\n</label>";
 var itemPlaceholder = "<li id=\"list-item\" data-id=\"{%id%}\" data-type=\"{%type%}\" class=\"item\">\n    <div class=\"item-name\">{%name%}</div>\n    <div class=\"item-description\">{%description%}</div>\n    <div class=\"item-value {%class-color%}\">{%value%}{%percent-placeholder%}</div>\n    <div class=\"item-options\">\n    <div class=\"item-edit\" id=\"item-edit\">\n        <svg class=\"item-icon item-icon-edit\">\n            <use xlink:href=\"img/svg/icons.svg#icon-pencil\"></use>\n        </svg>\n    </div>\n    <div class=\"item-delete\" id=\"item-delete\">\n        <svg class=\"item-icon item-icon-delete\">\n            <use xlink:href=\"img/svg/icons.svg#icon-cancel-circle\"></use>\n        </svg>\n    </div>\n    </div>\n</li>";
 var percentPlaceholder = "<span class=\"item-percent\" id=\"item-percent\">{%percent%}</span>";
 var placeholders = {
   addPopupPlaceholder: addPopupPlaceholder,
+  categoryItem: categoryItem,
   itemPlaceholder: itemPlaceholder,
   percentPlaceholder: percentPlaceholder
 };
@@ -40650,7 +40654,7 @@ var Functions = {
 };
 var _default = Functions;
 exports.default = _default;
-},{}],"views/views.js":[function(require,module,exports) {
+},{}],"views/dashboardViews.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40658,11 +40662,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _dom = _interopRequireWildcard(require("./../utils/dom.js"));
+var _dom = _interopRequireWildcard(require("../utils/dom.js"));
 
-var _placeholders = _interopRequireDefault(require("./../utils/placeholders.js"));
+var _placeholders = _interopRequireDefault(require("../utils/placeholders.js"));
 
-var _functions = _interopRequireDefault(require("./../utils/functions.js"));
+var _functions = _interopRequireDefault(require("../utils/functions.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40723,9 +40727,18 @@ var addNewItemToDOM = function addNewItemToDOM(input) {
   (0, _dom.refreshDOM)();
 };
 
+var updatePercentItem = function updatePercentItem(id, percent) {
+  _dom.default.listsItems.forEach(function (item) {
+    if (item.dataset.id == id) {
+      item.childNodes[5].childNodes[1].textContent = "".concat(percent, "%");
+    }
+  });
+}; // Remove item from UI
+
+
 var removeDomItem = function removeDomItem(element) {
   element.remove();
-}; // SHOW / CLOSE INPUT POPUP + other things
+}; // SHOW ADD NEW ITEM POPUP
 
 
 var showAddNewItemPopup = function showAddNewItemPopup(event) {
@@ -40748,9 +40761,21 @@ var showAddNewItemPopup = function showAddNewItemPopup(event) {
   document.body.insertAdjacentHTML('beforeend', element);
 };
 
+var addCategoriesToPopup = function addCategoriesToPopup(list) {
+  list.forEach(function (category) {
+    var item = _placeholders.default.categoryItem.replace(/{%item-id%}/g, category);
+
+    item = item.replace('{%item-name%}', firstLetterUppercase(category));
+
+    _dom.default.addNewItemPopup.categoryList.insertAdjacentHTML('beforeend', item);
+  });
+}; // CLOSE ADD NEW ITEM POPUP
+
+
 var closeAddNewItemPopup = function closeAddNewItemPopup() {
   document.getElementById('dark-screen-popup').remove();
-};
+}; // HIGHLIGHT THE CATEGORY SELECTED
+
 
 var selectCategory = function selectCategory(e) {
   _dom.default.addNewItemPopup.radioBtns.forEach(function (radio) {
@@ -40760,9 +40785,10 @@ var selectCategory = function selectCategory(e) {
   if (e.target.checked) {
     e.target.parentElement.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-inputs');
   }
-};
+}; // Update UI When state changes
 
-var updateState = function updateState(state) {
+
+var updateWithNewState = function updateWithNewState(state) {
   _dom.default.balance.textContent = state.balance;
   _dom.default.monthIncome.textContent = state.monthIncomesValue;
   _dom.default.monthExpense.textContent = state.monthExpensesValue;
@@ -40770,9 +40796,7 @@ var updateState = function updateState(state) {
 };
 
 var allowOnlyNumbersAndMathSymbols = function allowOnlyNumbersAndMathSymbols(element) {
-  element.addEventListener('input', function (e) {
-    e.preventDefault(); // console.log(e);
-
+  element.addEventListener('keydown', function (e) {
     if (document.querySelector('.input-box-placeholder').style.visibility !== 'hidden') {
       document.querySelector('.input-box-placeholder').style.visibility = 'hidden';
     } // const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '/', '*'];
@@ -40781,19 +40805,14 @@ var allowOnlyNumbersAndMathSymbols = function allowOnlyNumbersAndMathSymbols(ele
     var allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
     var isOk = false;
     allowedChars.forEach(function (char) {
-      if (e.data === char) isOk = true;
+      if (e.key === char) isOk = true;
     });
 
-    if (!isOk) {
-      var arr = e.target.textContent.split(e.data);
-      e.target.textContent = arr.join('');
+    if (isOk === false && e.key !== 'Backspace') {
+      e.preventDefault();
     }
   });
-}; // const clearInputs = () => {
-//     dom.inputDescription.value = '';
-//     dom.inputValue.value = '';
-// }
-
+};
 
 var addItemHoverClass = function addItemHoverClass(e) {
   _dom.default.listsItems.forEach(function (item) {
@@ -40807,17 +40826,18 @@ var mainPageViews = {
   initView: initView,
   addNewItemToDOM: addNewItemToDOM,
   removeDomItem: removeDomItem,
-  updateState: updateState,
+  updateWithNewState: updateWithNewState,
   showAddNewItemPopup: showAddNewItemPopup,
+  addCategoriesToPopup: addCategoriesToPopup,
   selectCategory: selectCategory,
   closeAddNewItemPopup: closeAddNewItemPopup,
   allowOnlyNumbersAndMathSymbols: allowOnlyNumbersAndMathSymbols,
-  // clearInputs: clearInputs,
-  addItemHoverClass: addItemHoverClass
+  addItemHoverClass: addItemHoverClass,
+  updatePercentItem: updatePercentItem
 };
 var _default = mainPageViews;
 exports.default = _default;
-},{"./../utils/dom.js":"utils/dom.js","./../utils/placeholders.js":"utils/placeholders.js","./../utils/functions.js":"utils/functions.js"}],"utils/state.js":[function(require,module,exports) {
+},{"../utils/dom.js":"utils/dom.js","../utils/placeholders.js":"utils/placeholders.js","../utils/functions.js":"utils/functions.js"}],"utils/state.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40844,32 +40864,62 @@ var State = /*#__PURE__*/function () {
   }
 
   _createClass(State, [{
-    key: "calcPercentage",
-    value: function calcPercentage() {
-      var result = this.monthExpensesValue * 100 / this.monthIncomesValue;
-      result = result.toFixed(2);
-      this.monthExpensesPercentage = parseFloat(result);
+    key: "updateBalance",
+    value: function updateBalance() {
+      var val = this.monthIncomesValue - this.monthExpensesValue;
+      this.balance = parseFloat(val.toFixed(2));
+    }
+  }, {
+    key: "calcTotalExpensesPercentage",
+    value: function calcTotalExpensesPercentage() {
+      if (this.monthIncomesValue === 0) {
+        this.monthExpensesPercentage = 0;
+      } else {
+        var result = this.monthExpensesValue * 100 / this.monthIncomesValue;
+        result = result.toFixed(2);
+        this.monthExpensesPercentage = parseFloat(result);
+      }
+    }
+  }, {
+    key: "calcEveryExpensePercentage",
+    value: function calcEveryExpensePercentage() {
+      var _this = this;
+
+      this.expenses.forEach(function (expense) {
+        if (_this.monthIncomesValue === 0) {
+          expense.percent = 0;
+        } else {
+          var result = _this.monthExpensesValue * 100 / _this.monthIncomesValue;
+          result = result.toFixed(2);
+          expense.percent = parseFloat(result);
+        }
+      });
     }
   }, {
     key: "updateIncomes",
     value: function updateIncomes(newIncome) {
-      this.incomes.push(newIncome);
-      this.updateIncExpValue('inc');
+      // push new item to incomes array
+      this.incomes.push(newIncome); //update the month income value 
+
+      this.updateIncExpValue('inc'); // update every expense percentage value
+
+      this.calcEveryExpensePercentage(); // update month percentage value
+
+      this.calcTotalExpensesPercentage(); // update Balance
+
       this.updateBalance();
     }
   }, {
     key: "updateExpeses",
     value: function updateExpeses(newExpense) {
-      this.expenses.push(newExpense);
-      this.updateIncExpValue('exp');
-      this.calcPercentage();
+      // push new item to expenses array
+      this.expenses.push(newExpense); //update the month expense value 
+
+      this.updateIncExpValue('exp'); // calculate the parcentage of expenses from incomes
+
+      this.calcTotalExpensesPercentage(); // update Balance
+
       this.updateBalance();
-    }
-  }, {
-    key: "updateBalance",
-    value: function updateBalance() {
-      var val = this.monthIncomesValue - this.monthExpensesValue;
-      this.balance = parseFloat(val.toFixed(2));
     }
   }, {
     key: "updateIncExpValue",
@@ -40896,9 +40946,16 @@ var State = /*#__PURE__*/function () {
         if (income.id !== dataId) {
           newIncomes.push(income);
         }
-      });
-      this.incomes = newIncomes;
-      this.updateIncExpValue('inc');
+      }); // assign incomes array without the deleted array
+
+      this.incomes = newIncomes; // update month Income value
+
+      this.updateIncExpValue('inc'); // update every expense percentage value
+
+      this.calcEveryExpensePercentage(); // update month percentage value
+
+      this.calcTotalExpensesPercentage(); // update balance
+
       this.updateBalance();
     }
   }, {
@@ -40909,10 +40966,14 @@ var State = /*#__PURE__*/function () {
         if (expense.id !== dataId) {
           newExpenses.push(expense);
         }
-      });
-      this.expenses = newExpenses;
-      this.updateIncExpValue('exp');
-      this.calcPercentage();
+      }); // assign incomes array without the deleted array
+
+      this.expenses = newExpenses; // update month Expenses value
+
+      this.updateIncExpValue('exp'); // update month percentage value
+
+      this.calcTotalExpensesPercentage(); //update balance
+
       this.updateBalance();
     }
   }]);
@@ -40922,7 +40983,7 @@ var State = /*#__PURE__*/function () {
 
 var _default = State;
 exports.default = _default;
-},{}],"models/model.js":[function(require,module,exports) {
+},{}],"models/dashboardModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40934,11 +40995,11 @@ var _app = _interopRequireDefault(require("firebase/app"));
 
 require("firebase/firestore");
 
-var _views = _interopRequireDefault(require("./../views/views.js"));
+var _dashboardViews = _interopRequireDefault(require("../views/dashboardViews.js"));
 
-var _state = _interopRequireDefault(require("./../utils/state.js"));
+var _state = _interopRequireDefault(require("../utils/state.js"));
 
-var _functions = _interopRequireDefault(require("./../utils/functions.js"));
+var _functions = _interopRequireDefault(require("../utils/functions.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41002,6 +41063,52 @@ var initState = /*#__PURE__*/function () {
   return function initState() {
     return _ref.apply(this, arguments);
   };
+}();
+
+var initUserProperties = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(user) {
+    var db, userRef, months, docRef, userProp, userLS;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            db = _app.default.firestore();
+            _context2.next = 3;
+            return db.collection('users').doc(user.uid).collection('months').get();
+
+          case 3:
+            userRef = _context2.sent;
+            console.log(userRef.docs);
+            months = [];
+            userRef.docs.forEach(function (doc) {
+              months.push(doc.id);
+            });
+            _context2.next = 9;
+            return db.collection('users').doc(user.uid).get();
+
+          case 9:
+            docRef = _context2.sent;
+            userProp = docRef.data();
+            userLS = {
+              userId: user.uid,
+              curency: userProp.curency,
+              incomesList: userProp.incomesList,
+              expensesList: userProp.expensesList,
+              months: months
+            };
+            window.localStorage.setItem('user', JSON.stringify(userLS));
+
+          case 13:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function initUserProperties(_x) {
+    return _ref2.apply(this, arguments);
+  };
 }(); // Create New Income / Expense
 
 
@@ -41015,11 +41122,8 @@ var createNewEntry = function createNewEntry(input) {
     input.percent = input.value * 100 / state.monthIncomesValue;
     input.percent = input.percent.toFixed(2);
     state.updateExpeses(input);
-  }
-
-  _views.default.addNewItemToDOM(input);
-
-  _views.default.updateState(state); // Views.clearInputs();
+  } // Views.addNewItemToDOM(input);
+  // Views.updateWithNewState(state);
   // updateLocalStorage(state);
 
 
@@ -41035,7 +41139,12 @@ var createNewEntry = function createNewEntry(input) {
     expenses: state.expenses
   });
   console.log(state);
-};
+  return {
+    input: input,
+    state: state
+  };
+}; // delete income / expense from state
+
 
 var deleteItemFromState = function deleteItemFromState(type, id) {
   id = parseInt(id);
@@ -41046,7 +41155,7 @@ var deleteItemFromState = function deleteItemFromState(type, id) {
     state.deleteExpense(id);
   }
 
-  _views.default.updateState(state);
+  _dashboardViews.default.updateWithNewState(state);
 
   var db = _app.default.firestore();
 
@@ -41058,19 +41167,20 @@ var deleteItemFromState = function deleteItemFromState(type, id) {
     monthExpensesPercentage: state.monthExpensesPercentage,
     incomes: state.incomes,
     expenses: state.expenses
-  }); // updateLocalStorage(state);
-  // console.log(state);
-}; // Create an Object with all functions
+  });
+  return state; // updateLocalStorage(state);
+}; // Create an Object with all functions and export it
 
 
 var Model = {
   initState: initState,
+  initUserProperties: initUserProperties,
   createNewEntry: createNewEntry,
   deleteItemFromState: deleteItemFromState
 };
 var _default = Model;
 exports.default = _default;
-},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./../views/views.js":"views/views.js","./../utils/state.js":"utils/state.js","./../utils/functions.js":"utils/functions.js"}],"utils/pages.js":[function(require,module,exports) {
+},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","../views/dashboardViews.js":"views/dashboardViews.js","../utils/state.js":"utils/state.js","../utils/functions.js":"utils/functions.js"}],"utils/pages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41085,7 +41195,7 @@ var signupPage = "<form class=\"login-form\">\n<h3 class=\"heading-3 heading-cen
 exports.signupPage = signupPage;
 var newUserPage = "<form class=\"new-user-form\">\n<h3 class=\"heading-3 heading-center\" id=\"title\">Welcome <span id=\"user-name\"></span></h3>\n<p class=\"message\">Please select your curency\uD83D\uDCB0</p>\n<div class=\"login-field\">\n    <label for=\"name\" class=\"label\">Name</label>\n    <select name=\"curency\" id=\"curency\">\n        <option value=\"\u20AC\" selected>Euro - \u20AC</option>\n        <option value=\"$\">US Dollars - $</option>\n        <option value=\"RON\">Romanian Leu - RON</option>\n        <option value=\"\xA3\">Great Britain Pound - \xA3</option>\n    </select>\n</div>\n\n<button class=\"new-btn login-btn\" id =\"ok-btn\">I will use this</button>\n</form>";
 exports.newUserPage = newUserPage;
-},{}],"controllers/mainPageController.js":[function(require,module,exports) {
+},{}],"controllers/dashboardController.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41097,13 +41207,13 @@ var _app = _interopRequireDefault(require("firebase/app"));
 
 require("firebase/firestore");
 
-var _dom = _interopRequireWildcard(require("./../utils/dom.js"));
+var _dom = _interopRequireWildcard(require("../utils/dom.js"));
 
-var _model = _interopRequireDefault(require("./../models/model.js"));
+var _dashboardModel = _interopRequireDefault(require("../models/dashboardModel.js"));
 
-var _views = _interopRequireDefault(require("./../views/views.js"));
+var _dashboardViews = _interopRequireDefault(require("../views/dashboardViews.js"));
 
-var _pages = require("./../utils/pages.js");
+var _pages = require("../utils/pages.js");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -41115,28 +41225,45 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var mainPageController = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+// init dashboard
+var initDashboard = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(user) {
     var state;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            document.getElementById('root').innerHTML = _pages.mainPage;
-            (0, _dom.initDOM)();
-            _context.next = 4;
-            return _model.default.initState();
+            // get dom elements
+            (0, _dom.initDOM)(); // init the state of the app
 
-          case 4:
+            _context.next = 3;
+            return _dashboardModel.default.initState();
+
+          case 3:
             state = _context.sent;
             console.log(state);
+            _context.next = 7;
+            return _dashboardModel.default.initUserProperties(user);
 
-            _views.default.initView(state);
+          case 7:
+            // use the state to populate the user interface
+            _dashboardViews.default.initView(state); // add events listeners to the new items added to the page
 
-            controller();
-            addEventListenersToNewListItems();
 
-          case 9:
+            addEventListenersToNewListItems(); // add event listeners for add-income and add-expense buttons
+
+            _dom.default.incomeBtn.addEventListener('click', activateAddNewItemPopup);
+
+            _dom.default.expenseBtn.addEventListener('click', activateAddNewItemPopup); // Log Out Button
+
+
+            _dom.default.logOutBtn.addEventListener('click', function (e) {
+              e.preventDefault();
+
+              _app.default.auth().signOut();
+            });
+
+          case 12:
           case "end":
             return _context.stop();
         }
@@ -41144,27 +41271,24 @@ var mainPageController = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function mainPageController() {
+  return function initDashboard(_x) {
     return _ref.apply(this, arguments);
   };
 }();
+/**************
+ * DashBoard controller
+ */
 
-var controller = function controller() {
-  _dom.default.incomeBtn.addEventListener('click', activateAddNewItemPopup);
 
-  _dom.default.expenseBtn.addEventListener('click', activateAddNewItemPopup);
-
-  _dom.default.logOutBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-
-    _app.default.auth().signOut();
-  });
+var dashboardController = function dashboardController(user) {
+  document.getElementById('root').innerHTML = _pages.mainPage;
+  initDashboard(user);
 }; // Add event listener to every new items added to the page (income or expese)
 
 
 var addEventListenersToNewListItems = function addEventListenersToNewListItems() {
   _dom.default.listsItems.forEach(function (item) {
-    return item.addEventListener('click', _views.default.addItemHoverClass);
+    return item.addEventListener('click', _dashboardViews.default.addItemHoverClass);
   });
 
   _dom.default.deleteListItem.forEach(function (el) {
@@ -41172,9 +41296,16 @@ var addEventListenersToNewListItems = function addEventListenersToNewListItems()
       e.preventDefault();
       var element = e.currentTarget.parentElement.parentElement;
 
-      _views.default.removeDomItem(element);
+      _dashboardViews.default.removeDomItem(element);
 
-      _model.default.deleteItemFromState(element.dataset.type, element.dataset.id);
+      var state = _dashboardModel.default.deleteItemFromState(element.dataset.type, element.dataset.id); // if income then update all expenses percentages
+
+
+      if (element.dataset.type === '+') {
+        state.expenses.forEach(function (expense) {
+          _dashboardViews.default.updatePercentItem(expense.id, expense.percent);
+        });
+      }
     });
   });
 };
@@ -41183,13 +41314,24 @@ var addEventListenersToNewListItems = function addEventListenersToNewListItems()
 
 
 function activateAddNewItemPopup(event) {
-  event.preventDefault();
+  event.preventDefault(); // show the popup to add a new item
 
-  _views.default.showAddNewItemPopup(event);
+  _dashboardViews.default.showAddNewItemPopup(event); // Get all the elements of the popup
+
+
+  (0, _dom.refreshAddNewItemPopupDOM)(); // add the categories
+
+  var userProp = JSON.parse(window.localStorage.getItem('user'));
+
+  if (event.currentTarget.id === 'income-btn') {
+    _dashboardViews.default.addCategoriesToPopup(userProp.incomesList);
+  } else if (event.currentTarget.id === 'expense-btn') {
+    _dashboardViews.default.addCategoriesToPopup(userProp.expensesList);
+  }
 
   (0, _dom.refreshAddNewItemPopupDOM)(); // allow only numbers and math symbols in the value input (popup)
 
-  _views.default.allowOnlyNumbersAndMathSymbols(_dom.default.addNewItemPopup.inputValue);
+  _dashboardViews.default.allowOnlyNumbersAndMathSymbols(_dom.default.addNewItemPopup.inputValue);
 
   _dom.default.addNewItemPopup.inputDescription.addEventListener('input', function (e) {
     if (_dom.default.addNewItemPopup.descriptionBoxPlaceholder.style.visibility !== 'hidden') {
@@ -41199,43 +41341,59 @@ function activateAddNewItemPopup(event) {
 
 
   _dom.default.addNewItemPopup.radioBtns.forEach(function (radioBtn) {
-    radioBtn.addEventListener('change', _views.default.selectCategory);
+    radioBtn.addEventListener('change', _dashboardViews.default.selectCategory);
   }); // close the popup with cancel button
 
 
   _dom.default.addNewItemPopup.cancelBtn.addEventListener('click', function (e) {
     e.preventDefault();
 
-    _views.default.closeAddNewItemPopup();
+    _dashboardViews.default.closeAddNewItemPopup();
   }); // when submit the popup
 
 
-  _dom.default.addNewItemPopup.submitBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    var input = {
-      type: e.currentTarget.dataset.type,
-      description: _dom.default.addNewItemPopup.inputDescription.textContent,
-      value: _dom.default.addNewItemPopup.inputValue.textContent
-    };
-
-    _dom.default.addNewItemPopup.radioBtns.forEach(function (radio) {
-      if (radio.checked) input.name = radio.id;
-    }); // console.log(input);
-    // create new income / expense
+  _dom.default.addNewItemPopup.submitBtn.addEventListener('click', addNewItem);
+} // when popup submited, add a new item
 
 
-    _model.default.createNewEntry(input); // add event listener for the new elements inserted
+function addNewItem(e) {
+  e.preventDefault();
+  var input = {
+    type: e.currentTarget.dataset.type,
+    description: _dom.default.addNewItemPopup.inputDescription.textContent,
+    value: _dom.default.addNewItemPopup.inputValue.textContent
+  };
+
+  _dom.default.addNewItemPopup.radioBtns.forEach(function (radio) {
+    if (radio.checked) input.name = radio.id;
+  }); // create new income / expense
 
 
-    addEventListenersToNewListItems(); // close popup
+  var newStateAndInput = _dashboardModel.default.createNewEntry(input); // add the new item to page
 
-    _views.default.closeAddNewItemPopup();
-  });
+
+  _dashboardViews.default.addNewItemToDOM(newStateAndInput.input); // if income then update all expenses percentages
+
+
+  if (newStateAndInput.input.type === '+') {
+    // dashboardView.clearExpensesList();
+    newStateAndInput.state.expenses.forEach(function (expense) {
+      _dashboardViews.default.updatePercentItem(expense.id, expense.percent);
+    });
+  } // update the header
+
+
+  _dashboardViews.default.updateWithNewState(newStateAndInput.state); // add event listener for the new elements inserted
+
+
+  addEventListenersToNewListItems(); // close popup
+
+  _dashboardViews.default.closeAddNewItemPopup();
 }
 
-var _default = mainPageController;
+var _default = dashboardController;
 exports.default = _default;
-},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./../utils/dom.js":"utils/dom.js","./../models/model.js":"models/model.js","./../views/views.js":"views/views.js","./../utils/pages.js":"utils/pages.js"}],"controllers/authController.js":[function(require,module,exports) {
+},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","../utils/dom.js":"utils/dom.js","../models/dashboardModel.js":"models/dashboardModel.js","../views/dashboardViews.js":"views/dashboardViews.js","../utils/pages.js":"utils/pages.js"}],"controllers/authController.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41370,14 +41528,11 @@ var newUserPageController = function newUserPageController(firebase, userId) {
     e.preventDefault();
     var curency = document.getElementById('curency').value;
     firebase.firestore().collection('users').doc(userId).update({
-      curency: curency
+      curency: curency,
+      incomesList: ['salary', 'project', 'dividend', 'pension'],
+      expensesList: ['rent', 'food', 'bills', 'car', 'transport', 'shopping']
     });
-    var user = {
-      userId: userId,
-      curency: curency
-    };
     window.localStorage.removeItem('isNewUser');
-    window.localStorage.setItem('user', JSON.stringify(user));
     window.location.reload();
   });
 };
@@ -41385,7 +41540,6 @@ var newUserPageController = function newUserPageController(firebase, userId) {
 var _default = newUserPageController;
 exports.default = _default;
 },{"./../utils/pages.js":"utils/pages.js"}],"index.js":[function(require,module,exports) {
-var process = require("process");
 "use strict";
 
 require("regenerator-runtime/runtime");
@@ -41398,7 +41552,7 @@ require("firebase/firestore");
 
 var _firebaseConfig = _interopRequireDefault(require("./utils/firebaseConfig.js"));
 
-var _mainPageController = _interopRequireDefault(require("./controllers/mainPageController.js"));
+var _dashboardController = _interopRequireDefault(require("./controllers/dashboardController.js"));
 
 var _authController = _interopRequireDefault(require("./controllers/authController.js"));
 
@@ -41412,9 +41566,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var initApp = function initApp() {
   _app.default.initializeApp(_firebaseConfig.default);
 
-  undefined = '123456789';
-  console.log(process.env);
-
   _app.default.auth().onAuthStateChanged(function (user) {
     if (user) {
       console.log(user); // window.history.pushState({}, 'Budget App', '/');
@@ -41422,7 +41573,7 @@ var initApp = function initApp() {
       if (window.localStorage.getItem('isNewUser')) {
         (0, _newUserController.default)(_app.default, user.uid);
       } else {
-        (0, _mainPageController.default)(_app.default);
+        (0, _dashboardController.default)(user);
       }
     } else {
       console.log('no user');
@@ -41432,7 +41583,7 @@ var initApp = function initApp() {
 };
 
 initApp();
-},{"regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/auth":"../../node_modules/firebase/auth/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./utils/firebaseConfig.js":"utils/firebaseConfig.js","./controllers/mainPageController.js":"controllers/mainPageController.js","./controllers/authController.js":"controllers/authController.js","./controllers/newUserController.js":"controllers/newUserController.js","process":"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/auth":"../../node_modules/firebase/auth/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","./utils/firebaseConfig.js":"utils/firebaseConfig.js","./controllers/dashboardController.js":"controllers/dashboardController.js","./controllers/authController.js":"controllers/authController.js","./controllers/newUserController.js":"controllers/newUserController.js"}],"../../../../../.nvm/versions/node/v14.5.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -41460,7 +41611,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62959" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60337" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

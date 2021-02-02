@@ -8,30 +8,59 @@ class State {
         this.expenses = data.expenses;
     }
 
-    calcPercentage() {
-        let result = (this.monthExpensesValue * 100) / this.monthIncomesValue;
-        result = result.toFixed(2);
-        this.monthExpensesPercentage = parseFloat(result);
+    updateBalance() {
+        const val = this.monthIncomesValue - this.monthExpensesValue;
+        this.balance = parseFloat(val.toFixed(2));
+    }
+
+    calcTotalExpensesPercentage() {
+        if(this.monthIncomesValue === 0){
+            this.monthExpensesPercentage = 0;
+        }else {
+            let result = (this.monthExpensesValue * 100) / this.monthIncomesValue;
+            result = result.toFixed(2);
+            this.monthExpensesPercentage = parseFloat(result);
+        }
+    }
+
+    calcEveryExpensePercentage() {
+        this.expenses.forEach(expense => {
+            if(this.monthIncomesValue === 0) {
+                expense.percent = 0;
+            }else {
+                let result = (this.monthExpensesValue * 100) / this.monthIncomesValue;
+                result = result.toFixed(2);
+                expense.percent = parseFloat(result);
+            }
+        })
     }
 
     updateIncomes(newIncome) {
+        // push new item to incomes array
         this.incomes.push(newIncome);
+        //update the month income value 
         this.updateIncExpValue('inc');
+
+        // update every expense percentage value
+        this.calcEveryExpensePercentage();
+
+        // update month percentage value
+        this.calcTotalExpensesPercentage();
         
+        // update Balance
         this.updateBalance();
     }
 
     updateExpeses(newExpense) {
+        // push new item to expenses array
         this.expenses.push(newExpense);
+        //update the month expense value 
         this.updateIncExpValue('exp');
 
-        this.calcPercentage();
+        // calculate the parcentage of expenses from incomes
+        this.calcTotalExpensesPercentage();
+        // update Balance
         this.updateBalance();
-    }
-
-    updateBalance() {
-        const val = this.monthIncomesValue - this.monthExpensesValue;
-        this.balance = parseFloat(val.toFixed(2));
     }
 
     updateIncExpValue(type) {
@@ -52,9 +81,19 @@ class State {
                 newIncomes.push(income);
             }
         });
+        // assign incomes array without the deleted array
         this.incomes = newIncomes;
 
+        // update month Income value
         this.updateIncExpValue('inc');
+
+        // update every expense percentage value
+        this.calcEveryExpensePercentage();
+
+        // update month percentage value
+        this.calcTotalExpensesPercentage()
+
+        // update balance
         this.updateBalance();
     }
 
@@ -65,10 +104,16 @@ class State {
                 newExpenses.push(expense);
             }
         });
-
+        // assign incomes array without the deleted array
         this.expenses = newExpenses;
+
+        // update month Expenses value
         this.updateIncExpValue('exp');
-        this.calcPercentage()
+
+        // update month percentage value
+        this.calcTotalExpensesPercentage()
+
+        //update balance
         this.updateBalance();
     }
 }

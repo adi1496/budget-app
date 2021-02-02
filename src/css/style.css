@@ -61,7 +61,12 @@ body {
     background-color: #212221;
     position: fixed;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.month {
+    margin-left: 1rem;
+    align-self: center;
 }
 
 .user-box {

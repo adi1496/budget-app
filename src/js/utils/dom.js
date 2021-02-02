@@ -18,6 +18,7 @@ export const initDOM = () => {
         dom.addNewItemPopup = {
             inputValue: getId('input-value'),
             inputBoxPlaceholder: document.querySelector('.input-box-placeholder'),
+            categoryList: document.querySelector('.categories-list'),
             radioBtns: document.querySelectorAll('.radio-btn'),
             inputDescription: getId('input-description'),
             descriptionBoxPlaceholder: document.querySelector('.description-box-placeholder'),
@@ -46,6 +47,7 @@ export const refreshDOM = () => {
 export const refreshAddNewItemPopupDOM = () => {
     dom.addNewItemPopup.inputValue = getId('input-value');
     dom.addNewItemPopup.inputBoxPlaceholder = document.querySelector('.input-box-placeholder');
+    dom.addNewItemPopup.categoryList = document.querySelector('.categories-list');
     dom.addNewItemPopup.radioBtns = document.querySelectorAll('.radio-btn');
     dom.addNewItemPopup.inputDescription = getId('input-description');
     dom.addNewItemPopup.descriptionBoxPlaceholder = document.querySelector('.description-box-placeholder');

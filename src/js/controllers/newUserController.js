@@ -8,15 +8,12 @@ const newUserPageController = (firebase, userId) => {
 
         const curency = document.getElementById('curency').value;
         firebase.firestore().collection('users').doc(userId).update({
-            curency: curency
+            curency: curency,
+            incomesList: ['salary', 'project', 'dividend', 'pension'],
+            expensesList: ['rent', 'food', 'bills', 'car', 'transport', 'shopping']
         });
 
-        const user = {
-            userId: userId,
-            curency: curency
-        }
         window.localStorage.removeItem('isNewUser');
-        window.localStorage.setItem('user', JSON.stringify(user));
         window.location.reload();
     });
 }

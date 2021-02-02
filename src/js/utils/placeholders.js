@@ -10,34 +10,7 @@ const addPopupPlaceholder = `<div class="dark-screen" id="dark-screen-popup">
     </div>
 
     <div class="categories-list">
-        <label class="category-item" for="salary">
-            <input type="radio" class="radio-btn" id="salary" name="category-item">
-            <svg class="category-icon">
-                <use xlink:href="img/svg/category-icons.svg#icon-coin-euro"></use>
-            </svg>
-            <div class="category-description">Salary</div>
-        </label>
-        <label class="category-item" for="project">
-            <input type="radio" class="radio-btn" id="project" name="category-item">
-            <svg class="category-icon">
-                <use xlink:href="img/svg/category-icons.svg#icon-coin-euro"></use>
-            </svg>
-            <div class="category-description">Project</div>
-        </label>
-        <label class="category-item" for="transferta">
-            <input type="radio" class="radio-btn" id="transferta" name="category-item">
-            <svg class="category-icon">
-                <use xlink:href="img/svg/category-icons.svg#icon-coin-euro"></use>
-            </svg>
-            <div class="category-description">Transferta</div>
-        </label>
-        <label class="category-item" for="dividend">
-            <input type="radio" class="radio-btn" id="dividend" name="category-item">
-            <svg class="category-icon">
-                <use xlink:href="img/svg/category-icons.svg#icon-coin-euro"></use>
-            </svg>
-            <div class="category-description">Dividend</div>
-        </label>
+    
     </div>
 
     <div class="description-box">
@@ -52,6 +25,15 @@ const addPopupPlaceholder = `<div class="dark-screen" id="dark-screen-popup">
 
 </div>
 </div>`;
+
+const categoryItem = `
+<label class="category-item" for="{%item-id%}">
+    <input type="radio" class="radio-btn" id="{%item-id%}" name="category-item">
+    <svg class="category-icon">
+        <use xlink:href="img/svg/category-icons.svg#icon-coin-euro"></use>
+    </svg>
+    <div class="category-description">{%item-name%}</div>
+</label>`;
 
 
 const itemPlaceholder = `<li id="list-item" data-id="{%id%}" data-type="{%type%}" class="item">
@@ -78,6 +60,7 @@ const percentPlaceholder = `<span class="item-percent" id="item-percent">{%perce
 
 const placeholders = {
     addPopupPlaceholder: addPopupPlaceholder,
+    categoryItem: categoryItem,
     itemPlaceholder: itemPlaceholder,
     percentPlaceholder: percentPlaceholder
 }

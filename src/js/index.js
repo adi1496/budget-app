@@ -7,14 +7,12 @@ import 'firebase/firestore';
 
 // Own modules
 import firebaseConfig from './utils/firebaseConfig.js';
-import mainPageController from './controllers/mainPageController.js';
+import dashboardController from './controllers/dashboardController.js';
 import authController from './controllers/authController.js';
 import newUserPageController from './controllers/newUserController.js';
 
 const initApp = () => {
     firebase.initializeApp(firebaseConfig);
-    process.env.api = '123456789';
-    console.log(process.env);
 
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
@@ -23,7 +21,7 @@ const initApp = () => {
             if(window.localStorage.getItem('isNewUser')){
                 newUserPageController(firebase, user.uid);
             }else {
-                mainPageController(firebase);
+                dashboardController(user);
             }
         }else {
             console.log('no user');
