@@ -1,4 +1,7 @@
-export const mainPage = `<nav class="nav">
+export const mainPage = `
+<nav class="nav">
+    <select class="month" name="months-list" id="months-list">
+    </select>
     <div class="user-box">
         <img src="img/user.png" alt="user-img" class="user-img">
         <button class="logout-btn" id="logout-btn">Logout</button>

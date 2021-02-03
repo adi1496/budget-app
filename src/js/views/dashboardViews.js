@@ -9,9 +9,24 @@ const initView = (state) => {
     dom.monthIncome.textContent = state.monthIncomesValue;
     dom.monthExpense.textContent = state.monthExpensesValue;
     dom.monthExpensePercent.textContent = `${state.monthExpensesPercentage}%`;
+    dom.incomesList.innerHTML = '';
+    dom.expensesList.innerHTML = '';
     state.incomes.forEach(income => addNewItemToDOM(income));
     state.expenses.forEach(expense => addNewItemToDOM(expense));
+    dom.monthsList.innerHTML = '';
+    addMonthsListToDOM();
 }
+
+function addMonthsListToDOM(){
+    const months = JSON.parse(window.localStorage.getItem('user')).months;
+    months.forEach(month => {
+        const option = document.createElement('option');
+        if(month === window.localStorage.getItem('currentMonth')) option.selected = true;
+        option.value = month;
+        option.textContent = Functions.convertStorageMonthYearToNormal(month);
+        dom.monthsList.insertAdjacentElement('beforeend', option);
+    });
+};
 
 const firstLetterUppercase = (text) => {
     text = text.split('');

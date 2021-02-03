@@ -24,10 +24,15 @@ const printErrorLoginPage = (message, pivotElement) => {
     pivotElement.insertAdjacentElement('afterend', err);
 }
 
+const convertStorageMonthYearToNormal = (string) => {
+    return string.split('-').join(' ');
+}
+
 const Functions = {
     getMonthYear: getMonthYear,
     getMonthYearLocalStorage: getMonthYearLocalStorage,
-    printErrorLoginPage: printErrorLoginPage
+    printErrorLoginPage: printErrorLoginPage,
+    convertStorageMonthYearToNormal: convertStorageMonthYearToNormal
 }
 
 export default Functions;

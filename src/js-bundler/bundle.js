@@ -40559,6 +40559,7 @@ var getId = function getId(id) {
 var dom = {};
 
 var initDOM = function initDOM() {
+  dom.monthsList = getId('months-list');
   dom.logOutBtn = getId('logout-btn');
   dom.curency = document.querySelectorAll('#curency'), dom.headingMonth = getId('heading-month'), dom.month = getId('heading-month'), dom.balance = getId('balance-value'), dom.monthIncome = getId('income-month'), dom.monthExpense = getId('expense-month'), dom.monthExpensePercent = getId('expense-month-percent'), dom.incomeBtn = getId('income-btn'), dom.expenseBtn = getId('expense-btn'), dom.addNewItemPopup = {
     inputValue: getId('input-value'),
@@ -40647,10 +40648,15 @@ var printErrorLoginPage = function printErrorLoginPage(message, pivotElement) {
   pivotElement.insertAdjacentElement('afterend', err);
 };
 
+var convertStorageMonthYearToNormal = function convertStorageMonthYearToNormal(string) {
+  return string.split('-').join(' ');
+};
+
 var Functions = {
   getMonthYear: getMonthYear,
   getMonthYearLocalStorage: getMonthYearLocalStorage,
-  printErrorLoginPage: printErrorLoginPage
+  printErrorLoginPage: printErrorLoginPage,
+  convertStorageMonthYearToNormal: convertStorageMonthYearToNormal
 };
 var _default = Functions;
 exports.default = _default;
@@ -40685,13 +40691,31 @@ var initView = function initView(state) {
   _dom.default.monthIncome.textContent = state.monthIncomesValue;
   _dom.default.monthExpense.textContent = state.monthExpensesValue;
   _dom.default.monthExpensePercent.textContent = "".concat(state.monthExpensesPercentage, "%");
+  _dom.default.incomesList.innerHTML = '';
+  _dom.default.expensesList.innerHTML = '';
   state.incomes.forEach(function (income) {
     return addNewItemToDOM(income);
   });
   state.expenses.forEach(function (expense) {
     return addNewItemToDOM(expense);
   });
+  _dom.default.monthsList.innerHTML = '';
+  addMonthsListToDOM();
 };
+
+function addMonthsListToDOM() {
+  var months = JSON.parse(window.localStorage.getItem('user')).months;
+  months.forEach(function (month) {
+    var option = document.createElement('option');
+    if (month === window.localStorage.getItem('currentMonth')) option.selected = true;
+    option.value = month;
+    option.textContent = _functions.default.convertStorageMonthYearToNormal(month);
+
+    _dom.default.monthsList.insertAdjacentElement('beforeend', option);
+  });
+}
+
+;
 
 var firstLetterUppercase = function firstLetterUppercase(text) {
   text = text.split('');
@@ -41016,7 +41040,7 @@ var updateLocalStorage = function updateLocalStorage(newState) {
 var state;
 
 var initState = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(month) {
     var db, userId, docRef, doc, newState;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -41025,7 +41049,7 @@ var initState = /*#__PURE__*/function () {
             db = _app.default.firestore(); // const localStorageData = window.localStorage.getItem(Functions.getMonthYearLocalStorage());
 
             userId = JSON.parse(window.localStorage.getItem('user')).userId;
-            docRef = db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage());
+            docRef = db.collection('users').doc(userId).collection('months').doc(month);
             _context.next = 5;
             return docRef.get();
 
@@ -41046,7 +41070,7 @@ var initState = /*#__PURE__*/function () {
                 incomes: [],
                 expenses: []
               };
-              db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()).set(newState);
+              db.collection('users').doc(userId).collection('months').doc(month).set(newState);
               state = new _state.default(newState);
             }
 
@@ -41060,7 +41084,7 @@ var initState = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function initState() {
+  return function initState(_x) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -41097,8 +41121,9 @@ var initUserProperties = /*#__PURE__*/function () {
               months: months
             };
             window.localStorage.setItem('user', JSON.stringify(userLS));
+            window.localStorage.setItem('currentMonth', _functions.default.getMonthYearLocalStorage());
 
-          case 13:
+          case 14:
           case "end":
             return _context2.stop();
         }
@@ -41106,13 +41131,13 @@ var initUserProperties = /*#__PURE__*/function () {
     }, _callee2);
   }));
 
-  return function initUserProperties(_x) {
+  return function initUserProperties(_x2) {
     return _ref2.apply(this, arguments);
   };
 }(); // Create New Income / Expense
 
 
-var createNewEntry = function createNewEntry(input) {
+var createNewEntry = function createNewEntry(input, month) {
   input.value = parseFloat(input.value);
   input.id = Date.now();
 
@@ -41130,7 +41155,7 @@ var createNewEntry = function createNewEntry(input) {
   var db = _app.default.firestore();
 
   var userId = JSON.parse(window.localStorage.getItem('user')).userId;
-  db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()).set({
+  db.collection('users').doc(userId).collection('months').doc(month).set({
     balance: state.balance,
     monthIncomesValue: state.monthIncomesValue,
     monthExpensesValue: state.monthExpensesValue,
@@ -41146,7 +41171,7 @@ var createNewEntry = function createNewEntry(input) {
 }; // delete income / expense from state
 
 
-var deleteItemFromState = function deleteItemFromState(type, id) {
+var deleteItemFromState = function deleteItemFromState(type, id, month) {
   id = parseInt(id);
 
   if (type === '+') {
@@ -41160,7 +41185,7 @@ var deleteItemFromState = function deleteItemFromState(type, id) {
   var db = _app.default.firestore();
 
   var userId = JSON.parse(window.localStorage.getItem('user')).userId;
-  db.collection('users').doc(userId).collection('months').doc(_functions.default.getMonthYearLocalStorage()).set({
+  db.collection('users').doc(userId).collection('months').doc(month).set({
     balance: state.balance,
     monthIncomesValue: state.monthIncomesValue,
     monthExpensesValue: state.monthExpensesValue,
@@ -41187,7 +41212,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.newUserPage = exports.signupPage = exports.loginPage = exports.mainPage = void 0;
-var mainPage = "<nav class=\"nav\">\n    <div class=\"user-box\">\n        <img src=\"img/user.png\" alt=\"user-img\" class=\"user-img\">\n        <button class=\"logout-btn\" id=\"logout-btn\">Logout</button>\n    </div>\n</nav>\n\n<button class=\"add-fixed-btn income-btn\" id=\"income-btn\">+</button>\n<button class=\"add-fixed-btn expense-btn\" id=\"expense-btn\">-</button>\n\n<header class=\"header\">\n    <div class=\"logo\">\n        <h1 class=\"heading-1\">Budget</h1>\n        <h1 class=\"heading-1\">APP</h1>\n    </div>\n\n    <!-- <h2 class=\"heading-2\">Your Budget <span id=\"heading-month\">December 2020</span></h2> -->\n    <div class=\"balance\">Your Balance: <span class=\"balance-value\" id=\"balance-value\"></span> <span class=\"balance-value\" id=\"curency\">\u20AC</span></div>\n\n    <div class=\"box-bar\">\n        <div class=\"box-bar-text\">Income:</div>\n        <div class=\"box-bar-sign\">+</div>\n        <div class=\"box-bar-value\"><span id=\"income-month\"></span> <span id=\"curency\">\u20AC</span></div>\n    </div>\n    <div class=\"box-bar box-bar-red\">\n        <div class=\"box-bar-text\">Expenses:</div>\n        <div class=\"box-bar-sign\">-</div>\n        <div class=\"box-bar-value\"><span id=\"expense-month\"></span> <span id=\"curency\">\u20AC</span></div>\n        <div class=\"box-bar-percent\" id=\"expense-month-percent\"></div>\n    </div>\n</header>\n\n<section class=\"section-list\">\n    <div class=\"section-list-box\">\n        <h3 class=\"heading-3 heading-3-blue\">Incomes</h3>\n        <ul class=\"list incomes-list\" id=\"incomes-list\">\n\n        </ul>\n    </div>\n\n\n    <div class=\"section-list-box\">\n        <h3 class=\"heading-3 heading-3-red\">Expenses</h3>\n        <ul class=\"list expenses-list\" id=\"expenses-list\">\n        \n        </ul>\n    </div>\n\n</section>";
+var mainPage = "\n<nav class=\"nav\">\n    <select class=\"month\" name=\"months-list\" id=\"months-list\">\n    </select>\n    <div class=\"user-box\">\n        <img src=\"img/user.png\" alt=\"user-img\" class=\"user-img\">\n        <button class=\"logout-btn\" id=\"logout-btn\">Logout</button>\n    </div>\n</nav>\n\n<button class=\"add-fixed-btn income-btn\" id=\"income-btn\">+</button>\n<button class=\"add-fixed-btn expense-btn\" id=\"expense-btn\">-</button>\n\n<header class=\"header\">\n    <div class=\"logo\">\n        <h1 class=\"heading-1\">Budget</h1>\n        <h1 class=\"heading-1\">APP</h1>\n    </div>\n\n    <!-- <h2 class=\"heading-2\">Your Budget <span id=\"heading-month\">December 2020</span></h2> -->\n    <div class=\"balance\">Your Balance: <span class=\"balance-value\" id=\"balance-value\"></span> <span class=\"balance-value\" id=\"curency\">\u20AC</span></div>\n\n    <div class=\"box-bar\">\n        <div class=\"box-bar-text\">Income:</div>\n        <div class=\"box-bar-sign\">+</div>\n        <div class=\"box-bar-value\"><span id=\"income-month\"></span> <span id=\"curency\">\u20AC</span></div>\n    </div>\n    <div class=\"box-bar box-bar-red\">\n        <div class=\"box-bar-text\">Expenses:</div>\n        <div class=\"box-bar-sign\">-</div>\n        <div class=\"box-bar-value\"><span id=\"expense-month\"></span> <span id=\"curency\">\u20AC</span></div>\n        <div class=\"box-bar-percent\" id=\"expense-month-percent\"></div>\n    </div>\n</header>\n\n<section class=\"section-list\">\n    <div class=\"section-list-box\">\n        <h3 class=\"heading-3 heading-3-blue\">Incomes</h3>\n        <ul class=\"list incomes-list\" id=\"incomes-list\">\n\n        </ul>\n    </div>\n\n\n    <div class=\"section-list-box\">\n        <h3 class=\"heading-3 heading-3-red\">Expenses</h3>\n        <ul class=\"list expenses-list\" id=\"expenses-list\">\n        \n        </ul>\n    </div>\n\n</section>";
 exports.mainPage = mainPage;
 var loginPage = "<form class=\"login-form\">\n<h3 class=\"heading-3 heading-center\" id=\"title\">Welcome back</h3>\n<div class=\"login-field\">\n    <label for=\"email\" class=\"label\">Email</label>\n    <input type=\"email\" name=\"email\" id=\"email\" class=\"input-field\">\n</div>\n<div class=\"login-field\">\n    <label for=\"password\" class=\"label\">Password</label>\n    <input type=\"password\" name=\"password\" id=\"password\" class=\"input-field\">\n</div>\n\n<button class=\"new-btn login-btn\" id=\"login-btn\">Login</button>\n<button class=\"new-btn google-btn\" id=\"login-with-google-btn\">Login With Google</button>\n\n<p class=\"question\">Forgot password? Reset it <a href=\"#\">here</a></p>\n<p class=\"question\">Don't have an account? Then <a href=\"#\" id=\"to-signup\">Sign Up</a></p>\n</form>";
 exports.loginPage = loginPage;
@@ -41215,6 +41240,8 @@ var _dashboardViews = _interopRequireDefault(require("../views/dashboardViews.js
 
 var _pages = require("../utils/pages.js");
 
+var _functions = _interopRequireDefault(require("./../utils/functions.js"));
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -41227,43 +41254,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 // init dashboard
 var initDashboard = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(user) {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(user, month) {
     var state;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             // get dom elements
-            (0, _dom.initDOM)(); // init the state of the app
+            (0, _dom.initDOM)(); // init user's prop
 
-            _context.next = 3;
-            return _dashboardModel.default.initState();
+            if (!user) {
+              _context.next = 5;
+              break;
+            }
 
-          case 3:
-            state = _context.sent;
-            console.log(state);
-            _context.next = 7;
+            console.log('called initUserProp');
+            _context.next = 5;
             return _dashboardModel.default.initUserProperties(user);
 
+          case 5:
+            _context.next = 7;
+            return _dashboardModel.default.initState(month);
+
           case 7:
-            // use the state to populate the user interface
+            state = _context.sent;
+            console.log(state); // use the state to populate the user interface
+
             _dashboardViews.default.initView(state); // add events listeners to the new items added to the page
 
 
-            addEventListenersToNewListItems(); // add event listeners for add-income and add-expense buttons
+            addEventListenersToNewListItems();
 
-            _dom.default.incomeBtn.addEventListener('click', activateAddNewItemPopup);
-
-            _dom.default.expenseBtn.addEventListener('click', activateAddNewItemPopup); // Log Out Button
-
-
-            _dom.default.logOutBtn.addEventListener('click', function (e) {
-              e.preventDefault();
-
-              _app.default.auth().signOut();
-            });
-
-          case 12:
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -41271,7 +41293,7 @@ var initDashboard = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function initDashboard(_x) {
+  return function initDashboard(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -41282,8 +41304,28 @@ var initDashboard = /*#__PURE__*/function () {
 
 var dashboardController = function dashboardController(user) {
   document.getElementById('root').innerHTML = _pages.mainPage;
-  initDashboard(user);
-}; // Add event listener to every new items added to the page (income or expese)
+  initDashboard(user, _functions.default.getMonthYearLocalStorage()); // add event listener for selected month
+
+  _dom.default.monthsList.addEventListener('change', changeSelectedMonth); // add event listeners for add-income and add-expense buttons
+
+
+  _dom.default.incomeBtn.addEventListener('click', activateAddNewItemPopup);
+
+  _dom.default.expenseBtn.addEventListener('click', activateAddNewItemPopup); // Log Out Button
+
+
+  _dom.default.logOutBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    _app.default.auth().signOut();
+  });
+}; // change selected month
+
+
+function changeSelectedMonth(e) {
+  window.localStorage.setItem('currentMonth', e.currentTarget.value);
+  initDashboard(undefined, e.currentTarget.value);
+} // Add event listener to every new items added to the page (income or expese)
 
 
 var addEventListenersToNewListItems = function addEventListenersToNewListItems() {
@@ -41298,7 +41340,9 @@ var addEventListenersToNewListItems = function addEventListenersToNewListItems()
 
       _dashboardViews.default.removeDomItem(element);
 
-      var state = _dashboardModel.default.deleteItemFromState(element.dataset.type, element.dataset.id); // if income then update all expenses percentages
+      var month = _dom.default.monthsList.value;
+
+      var state = _dashboardModel.default.deleteItemFromState(element.dataset.type, element.dataset.id, month); // if income then update all expenses percentages
 
 
       if (element.dataset.type === '+') {
@@ -41369,7 +41413,9 @@ function addNewItem(e) {
   }); // create new income / expense
 
 
-  var newStateAndInput = _dashboardModel.default.createNewEntry(input); // add the new item to page
+  var month = _dom.default.monthsList.value;
+
+  var newStateAndInput = _dashboardModel.default.createNewEntry(input, month); // add the new item to page
 
 
   _dashboardViews.default.addNewItemToDOM(newStateAndInput.input); // if income then update all expenses percentages
@@ -41393,7 +41439,7 @@ function addNewItem(e) {
 
 var _default = dashboardController;
 exports.default = _default;
-},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","../utils/dom.js":"utils/dom.js","../models/dashboardModel.js":"models/dashboardModel.js","../views/dashboardViews.js":"views/dashboardViews.js","../utils/pages.js":"utils/pages.js"}],"controllers/authController.js":[function(require,module,exports) {
+},{"firebase/app":"../../node_modules/firebase/app/dist/index.esm.js","firebase/firestore":"../../node_modules/firebase/firestore/dist/index.esm.js","../utils/dom.js":"utils/dom.js","../models/dashboardModel.js":"models/dashboardModel.js","../views/dashboardViews.js":"views/dashboardViews.js","../utils/pages.js":"utils/pages.js","./../utils/functions.js":"utils/functions.js"}],"controllers/authController.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

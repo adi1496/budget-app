@@ -5,33 +5,34 @@ const getId = (id) => {
 const dom = {};
 
 export const initDOM = () => {
-        dom.logOutBtn = getId('logout-btn');
-        dom.curency = document.querySelectorAll('#curency'),
-        dom.headingMonth = getId('heading-month'),
-        dom.month = getId('heading-month'),
-        dom.balance = getId('balance-value'),
-        dom.monthIncome = getId('income-month'),
-        dom.monthExpense = getId('expense-month'),
-        dom.monthExpensePercent = getId('expense-month-percent'),
-        dom.incomeBtn = getId('income-btn'),
-        dom.expenseBtn = getId('expense-btn'),
-        dom.addNewItemPopup = {
-            inputValue: getId('input-value'),
-            inputBoxPlaceholder: document.querySelector('.input-box-placeholder'),
-            categoryList: document.querySelector('.categories-list'),
-            radioBtns: document.querySelectorAll('.radio-btn'),
-            inputDescription: getId('input-description'),
-            descriptionBoxPlaceholder: document.querySelector('.description-box-placeholder'),
-            cancelBtn: getId('cancel-popup-btn'),
-            submitBtn: getId('submit-btn')
-        },
-        dom.incomesList = getId('incomes-list'),
-        dom.expensesList = getId('expenses-list'),
-        dom.listsItems = document.querySelectorAll('#list-item'),
-        dom.editListItem = document.querySelectorAll('#item-edit'),
-        dom.deleteListItem = document.querySelectorAll('#item-delete'),
-        
-        dom.root = document.documentElement
+    dom.monthsList = getId('months-list');
+    dom.logOutBtn = getId('logout-btn');
+    dom.curency = document.querySelectorAll('#curency'),
+    dom.headingMonth = getId('heading-month'),
+    dom.month = getId('heading-month'),
+    dom.balance = getId('balance-value'),
+    dom.monthIncome = getId('income-month'),
+    dom.monthExpense = getId('expense-month'),
+    dom.monthExpensePercent = getId('expense-month-percent'),
+    dom.incomeBtn = getId('income-btn'),
+    dom.expenseBtn = getId('expense-btn'),
+    dom.addNewItemPopup = {
+        inputValue: getId('input-value'),
+        inputBoxPlaceholder: document.querySelector('.input-box-placeholder'),
+        categoryList: document.querySelector('.categories-list'),
+        radioBtns: document.querySelectorAll('.radio-btn'),
+        inputDescription: getId('input-description'),
+        descriptionBoxPlaceholder: document.querySelector('.description-box-placeholder'),
+        cancelBtn: getId('cancel-popup-btn'),
+        submitBtn: getId('submit-btn')
+    },
+    dom.incomesList = getId('incomes-list'),
+    dom.expensesList = getId('expenses-list'),
+    dom.listsItems = document.querySelectorAll('#list-item'),
+    dom.editListItem = document.querySelectorAll('#item-edit'),
+    dom.deleteListItem = document.querySelectorAll('#item-delete'),
+    
+    dom.root = document.documentElement
 
 }
 

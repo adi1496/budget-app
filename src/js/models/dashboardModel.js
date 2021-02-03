@@ -13,12 +13,12 @@ const updateLocalStorage = (newState) => {
 
 //Init State
 let state;
-const initState = async () => {
+const initState = async (month) => {
     const db = firebase.firestore();
     // const localStorageData = window.localStorage.getItem(Functions.getMonthYearLocalStorage());
     const userId = JSON.parse(window.localStorage.getItem('user')).userId;
     const docRef = db.collection('users').doc(userId)
-    .collection('months').doc(Functions.getMonthYearLocalStorage());
+    .collection('months').doc(month);
 
     const doc = await docRef.get();
     if(doc.exists){
@@ -36,7 +36,7 @@ const initState = async () => {
             expenses: []
         }
         db.collection('users').doc(userId).collection('months')
-        .doc(Functions.getMonthYearLocalStorage()).set(newState);
+        .doc(month).set(newState);
         state = new State(newState);
     }
 
@@ -65,13 +65,12 @@ const initUserProperties = async (user) => {
     }
 
     window.localStorage.setItem('user', JSON.stringify(userLS));
+    window.localStorage.setItem('currentMonth', Functions.getMonthYearLocalStorage());
 }
 
 
-
-
 // Create New Income / Expense
-const createNewEntry = (input) => {
+const createNewEntry = (input, month) => {
     input.value = parseFloat(input.value);
     input.id = Date.now();
 
@@ -91,7 +90,7 @@ const createNewEntry = (input) => {
     const userId = JSON.parse(window.localStorage.getItem('user')).userId;
 
     db.collection('users').doc(userId).collection('months')
-    .doc(Functions.getMonthYearLocalStorage()).set({
+    .doc(month).set({
         balance: state.balance,
         monthIncomesValue: state.monthIncomesValue,
         monthExpensesValue: state.monthExpensesValue,
@@ -109,7 +108,7 @@ const createNewEntry = (input) => {
 
 
 // delete income / expense from state
-const deleteItemFromState = (type, id) => {
+const deleteItemFromState = (type, id, month) => {
     id = parseInt(id);
     if(type === '+'){
         state.deleteIncome(id);
@@ -123,7 +122,7 @@ const deleteItemFromState = (type, id) => {
     const userId = JSON.parse(window.localStorage.getItem('user')).userId;
     
     db.collection('users').doc(userId).collection('months')
-    .doc(Functions.getMonthYearLocalStorage()).set({
+    .doc(month).set({
         balance: state.balance,
         monthIncomesValue: state.monthIncomesValue,
         monthExpensesValue: state.monthExpensesValue,

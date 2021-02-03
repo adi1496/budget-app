@@ -6,23 +6,42 @@ import dom, {initDOM, refreshDOM, refreshAddNewItemPopupDOM} from '../utils/dom.
 import DashboardModel from '../models/dashboardModel.js';
 import dashboardView from '../views/dashboardViews.js';
 import {mainPage} from '../utils/pages.js';
+import Functions from './../utils/functions.js';
 
 // init dashboard
-const initDashboard = async (user) => {
+const initDashboard = async (user, month) => {
     // get dom elements
     initDOM();
+    // init user's prop
+    if(user) {
+        console.log('called initUserProp');
+        await DashboardModel.initUserProperties(user);
+    }
     
     // init the state of the app
-    const state = await DashboardModel.initState();
+    const state = await DashboardModel.initState(month);
     console.log(state);
-
-    await DashboardModel.initUserProperties(user);
-
+    
+    
     // use the state to populate the user interface
     dashboardView.initView(state);
 
     // add events listeners to the new items added to the page
     addEventListenersToNewListItems();
+}
+
+
+
+/**************
+ * DashBoard controller
+ */
+
+const dashboardController = (user) => {
+    document.getElementById('root').innerHTML = mainPage;
+    initDashboard(user, Functions.getMonthYearLocalStorage());
+
+    // add event listener for selected month
+    dom.monthsList.addEventListener('change', changeSelectedMonth);
 
     // add event listeners for add-income and add-expense buttons
     dom.incomeBtn.addEventListener('click', activateAddNewItemPopup);
@@ -36,14 +55,10 @@ const initDashboard = async (user) => {
 }
 
 
-
-/**************
- * DashBoard controller
- */
-
-const dashboardController = (user) => {
-    document.getElementById('root').innerHTML = mainPage;
-    initDashboard(user);
+// change selected month
+function changeSelectedMonth(e) {
+    window.localStorage.setItem('currentMonth', e.currentTarget.value);
+    initDashboard(undefined, e.currentTarget.value);
 }
 
 
@@ -58,7 +73,8 @@ const addEventListenersToNewListItems = () => {
             const element = e.currentTarget.parentElement.parentElement;
 
             dashboardView.removeDomItem(element);
-            const state = DashboardModel.deleteItemFromState(element.dataset.type, element.dataset.id);
+            const month = dom.monthsList.value;
+            const state = DashboardModel.deleteItemFromState(element.dataset.type, element.dataset.id, month);
 
             // if income then update all expenses percentages
             if(element.dataset.type === '+') {
@@ -134,7 +150,8 @@ function addNewItem(e) {
     });
 
     // create new income / expense
-    const newStateAndInput =  DashboardModel.createNewEntry(input);
+    const month = dom.monthsList.value;
+    const newStateAndInput =  DashboardModel.createNewEntry(input, month);
     
     // add the new item to page
     dashboardView.addNewItemToDOM(newStateAndInput.input);

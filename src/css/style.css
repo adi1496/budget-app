@@ -67,6 +67,12 @@ body {
 .month {
     margin-left: 1rem;
     align-self: center;
+    background-color: transparent;
+    border: none;
+}
+
+.month:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .user-box {
@@ -215,7 +221,7 @@ body {
     /* background-color:  #ecebeb; */
     /* margin-bottom: .5rem; */
     border-bottom: 1px solid #e9e6e6;
-    justify-content: center;
+    justify-content: start;
 }
 
 .category-item-selected {
@@ -234,6 +240,7 @@ body {
     width: 4rem;
     height: 4rem;
     margin-right: 2rem;
+    margin-left: .5rem;
 }
 
 .category-description {
