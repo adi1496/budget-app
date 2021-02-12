@@ -7,3 +7,4 @@
 Firebase: https://firebase.google.com/docs/web/setup
 Parcel, how to fix the `regeneratorRuntime is not defined` error: https://flaviocopes.com/parcel-regeneratorruntime-not-defined/
 Parcel, environment variables: https://www.robertcooper.me/front-end-javascript-environment-variables
+Input with decimal step: https://stackoverflow.com/questions/19011861/is-there-a-float-input-type-in-html5
